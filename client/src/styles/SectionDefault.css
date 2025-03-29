@@ -1,0 +1,24 @@
+.sectionDefault {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    height: auto;
+  }
+  
+  .sectionDefault h1 {
+    padding-left: 20px;
+    font-size: 17px;
+    color: rgb(255, 255, 255, 0.7);
+    width: 100%;
+  }
+  
+  .musicCardGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    width: 100%;
+    justify-items: center;
+    margin-top: 20px;
+  }

@@ -1,0 +1,40 @@
+.sectionCustom {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    height: auto;
+  }
+  
+  .sectionHeader {
+    display: flex;
+    align-items: baseline; /* Assure que l'icône et le texte sont alignés verticalement */
+  }
+  
+  .sectionContainer h1 {
+    font-size: 17px;
+    color: rgb(255, 255, 255, 0.7);
+    padding-left: 20px;
+    padding-top: 30px;
+    margin-bottom: 20px;
+    width: auto;
+    margin-right: 10px; /* Espace entre le titre et l'icône */
+    /* Suppression du width pour que l'élément prenne seulement l'espace nécessaire */
+  }
+  
+  .deleteIcon {
+    transform: translateY(
+      2px
+    ); /* Ajuste la position de l'icône pour l'aligner avec le texte */
+    font-size: 18px; /* Ajuste la taille de l'icône */
+    color: rgb(255, 255, 255, 0.7);
+    cursor: pointer; /* Change le curseur en pointeur pour indiquer que c'est cliquable */
+    transition: transform 0.2s ease-in-out; /* Ajouter une petite animation */
+    /* Supprime margin-left pour réduire l'espace entre le texte et l'icône */
+  }
+  
+  .deleteIcon:hover {
+    color: white; /* Change la couleur lors du survol */
+  }
