@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { DemoConfirmationOverlay } from "./DemoConfirmationOverlay"; // Garde l'import de l'overlay
+import { DemoConfirmationOverlay } from "./DemoConfirmationOverlay";
 import "../styles/MusicCard.css";
 import iconeplay from "../assets/iconeplay.png";
 import { TbTrash, TbDotsVertical } from "react-icons/tb";
@@ -12,10 +12,8 @@ function MusicCard({ demo, deleteDemo }) {
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
 
-  // Si une image est présente, créer une URL d'image pour l'utiliser comme fond
-  const backgroundImage = image ? `url(${URL.createObjectURL(image)})` : null;
 
-  // Applique le style en ligne pour définir l'image de fond
+  const backgroundImage = image ? `url(${URL.createObjectURL(image)})` : null;
   const style = backgroundImage
     ? {
         backgroundImage: backgroundImage,
@@ -30,16 +28,16 @@ function MusicCard({ demo, deleteDemo }) {
   };
 
   const handleDeleteClick = () => {
-    setOverlayVisible(true); // Affiche l'overlay
+    setOverlayVisible(true);
   };
 
   const handleCancel = () => {
-    setOverlayVisible(false); // Cache l'overlay si l'annulation est choisie
+    setOverlayVisible(false);
   };
 
   const handleConfirmDelete = () => {
-    deleteDemo(demo.id); // Supprime la démo
-    setOverlayVisible(false); // Cache l'overlay après suppression
+    deleteDemo(demo.id);
+    setOverlayVisible(false);
   };
 
   const toggleMenu = () => {
@@ -56,7 +54,6 @@ function MusicCard({ demo, deleteDemo }) {
           </i>
         </div>
 
-        {/* Menu déroulant */}
         {isMenuVisible && (
           <div className="menuOptions">
             <Link to="#" className="menuOptionShare">
@@ -80,7 +77,6 @@ function MusicCard({ demo, deleteDemo }) {
         </div>
       </div>
 
-      {/* Affichage de l'overlay ici, en dehors de la card */}
       {isOverlayVisible && (
         <DemoConfirmationOverlay
           demoTitle={title}

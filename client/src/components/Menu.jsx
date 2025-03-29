@@ -8,7 +8,7 @@ function Menu({ menuObject, className, activeIndex, onMenuClick }) {
           <li
             key={menu.id}
             className={menu.id === activeIndex ? "active" : ""}
-            onClick={() => onMenuClick(menu.id)} // Mise à jour de l'élément actif
+            onClick={() => onMenuClick(menu.id)}
           >
             <a href="#">
               <i>{menu.icon}</i>

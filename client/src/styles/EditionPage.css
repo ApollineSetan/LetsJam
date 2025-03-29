@@ -85,24 +85,24 @@
     border-radius: 10px;
     padding: 8px;
     font-size: 17px;
-    color: #fff; /* Couleur du texte en blanc */
+    color: #fff;
     outline: none;
     width: 100%;
-    caret-color: #fff; /* Couleur du curseur clignotant en blanc */
-    transition: border 0.3s ease; /* Transition douce pour la bordure */
+    caret-color: #fff;
+    transition: border 0.3s ease;
   }
   
   .transparentInput::placeholder {
-    color: rgba(255, 255, 255, 0.3); /* Couleur initiale du placeholder */
+    color: rgba(255, 255, 255, 0.3);
   }
   
   .transparentInput:focus::placeholder {
-    color: transparent; /* Le placeholder disparaît au focus */
+    color: transparent;
   }
   
   .transparentInput:focus {
     border: 1px solid rgba(255, 255, 255, 0.8);
-    caret-color: #fff; /* Curseur clignotant en blanc */
+    caret-color: #fff;
   }
   
   .sectionsDefault h1 {

@@ -3,27 +3,24 @@ import "../styles/LeftMenu.css";
 import logoImage from "../assets/logoImage.png";
 import { Menu } from "./Menu";
 import { MenuList } from "./MenuList";
-import { useLocation } from "react-router-dom"; // Importer le hook useLocation
+import { useLocation } from "react-router-dom";
 
 function LeftMenu() {
-  // Création d'un état pour suivre l'élément de menu actif
-  const [activeIndex, setActiveIndex] = useState(null);
 
-  // Utilisation de useLocation pour obtenir l'URL actuelle
+  const [activeIndex, setActiveIndex] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
-    // Logique pour définir l'index de l'élément actif en fonction de l'URL actuelle
     if (location.pathname === "/add-demo") {
-      setActiveIndex(2); // "Profil" (id: 2) est actif sur la page AddDemo
+      setActiveIndex(2);
     } else if (location.pathname === "/") {
-      setActiveIndex(2); // "Profil" (id: 2) est actif sur la page EditionPage
+      setActiveIndex(2);
     } else if (location.pathname.startsWith("/edit-demo")) {
-      setActiveIndex(2); // "Profil" (id: 2) est actif sur la page InfoDemo
+      setActiveIndex(2);
     } else {
-      setActiveIndex(null); // Si aucune condition ne correspond, aucun élément n'est surligné
+      setActiveIndex(null);
     }
-  }, [location]); // Mettre à jour l'index actif chaque fois que l'URL change
+  }, [location]);
 
   return (
     <div className="leftMenu">
@@ -33,7 +30,6 @@ function LeftMenu() {
         </i>
       </div>
 
-      {/* Passer activeIndex et handleMenuClick aux menus supérieurs et inférieurs*/}
       <Menu
         menuObject={MenuList.slice(0, 6)}
         className="primaryMenu"

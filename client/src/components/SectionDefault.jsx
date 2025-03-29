@@ -15,9 +15,9 @@ function SectionDefault({ demos, deleteDemo }) {
       <div className="musicCardGrid">
         {demosWithoutSection.map((demo) => (
           <MusicCard
-            key={demo.id} // Utilise l'id ici pour la clé
+            key={demo.id}
             demo={demo}
-            deleteDemo={deleteDemo} // Passer deleteDemo
+            deleteDemo={deleteDemo}
           />
         ))}
       </div>

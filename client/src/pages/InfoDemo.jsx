@@ -3,7 +3,7 @@ import { TopBar } from "../components/TopBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDemoContext } from "../contexts/DemoContext";
 import { RiImageEditFill } from "react-icons/ri";
-import "../styles/InfoDemo.css"; // Assurez-vous d'ajouter les nouveaux styles ici
+import "../styles/InfoDemo.css";
 
 function InfoDemo() {
   const { demoId } = useParams();
@@ -28,9 +28,9 @@ function InfoDemo() {
   }, [demo]);
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Ici on récupère le fichier
+    const file = e.target.files[0];
     setImage(file);
-    setImagePreview(URL.createObjectURL(file)); // On met à jour l'aperçu de l'image
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
@@ -52,7 +52,6 @@ function InfoDemo() {
       </div>
       {demo ? (
         <form onSubmit={handleSubmit} className="editForm">
-          {/* Image Card */}
           <div className="imageCard">
             <img src={imagePreview} alt="Demo" className="demoImage" />
             <label className="editIconLabel">
@@ -68,7 +67,6 @@ function InfoDemo() {
             </label>
           </div>
 
-          {/* Title and Description fields */}
           <div className="inputGroup">
             <input
               type="text"
@@ -86,7 +84,6 @@ function InfoDemo() {
             />
           </div>
 
-          {/* Submit button */}
           <button type="submit" className="submitButton">
             Enregistrer
           </button>

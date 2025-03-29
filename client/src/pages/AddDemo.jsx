@@ -4,23 +4,21 @@ import { TopBar } from "../components/TopBar";
 import { MdOutlineLink } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { FaImages } from "react-icons/fa";
-import { useDemoContext } from "../contexts/DemoContext"; // Importer le contexte
+import { useDemoContext } from "../contexts/DemoContext";
 
 function AddDemo() {
-  const [title, setTitle] = useState(""); // Titre de la démo
-  const [description, setDescription] = useState(""); // Description (facultatif)
-  const [file, setFile] = useState(null); // Fichier de la démo (obligatoire)
-  const [image, setImage] = useState(null); // Image d'illustration (facultatif)
-  const [sectionId, setSectionId] = useState(""); // ID de la section (facultatif)
-  const { addDemo, sections } = useDemoContext(); // Utiliser addDemo du contexte pour ajouter la démo
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
+  const [sectionId, setSectionId] = useState("");
+  const { addDemo, sections } = useDemoContext();
   const navigate = useNavigate();
 
-  // État pour le texte du bouton du fichier audio
   const [audioButtonText, setAudioButtonText] = useState(
     "Ajouter un fichier audio"
   );
 
-  // Fonction handleSubmit pour ajouter la démo
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -29,7 +27,6 @@ function AddDemo() {
       return;
     }
 
-    // Vérifier l'extension du fichier pour s'assurer qu'il a un format valide
     const validExtensions = [
       "mp3",
       "flac",
@@ -40,7 +37,7 @@ function AddDemo() {
       "m4a",
       "wma",
     ];
-    const fileExtension = file.name.split(".").pop().toLowerCase(); // Récupère l'extension du fichier en minuscule
+    const fileExtension = file.name.split(".").pop().toLowerCase();
 
     if (!validExtensions.includes(fileExtension)) {
       alert(
@@ -49,12 +46,10 @@ function AddDemo() {
       return;
     }
 
-    // Récupérer la durée du fichier audio
     const audio = new Audio(URL.createObjectURL(file));
     audio.onloadedmetadata = () => {
-      const duration = audio.duration; // Durée en secondes
+      const duration = audio.duration;
       if (duration > 3600) {
-        // 1h = 3600 secondes
         alert("La durée du fichier audio ne doit pas dépasser 1 heure.");
         return;
       }
@@ -79,29 +74,26 @@ function AddDemo() {
       setDescription("");
       setFile(null);
       setImage(null);
-      setAudioButtonText("Ajouter un fichier audio"); // Réinitialiser le texte du bouton
+      setAudioButtonText("Ajouter un fichier audio");
 
       navigate("/");
     };
   };
 
-  // Fonction pour déclencher l'input de fichier audio
   const handleAudioClick = () => {
-    document.getElementById("audioFile").click(); // Simuler un clic sur l'input
+    document.getElementById("audioFile").click();
   };
 
-  // Fonction pour mettre à jour le nom du fichier audio sélectionné
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setAudioButtonText(selectedFile.name); // Mettre à jour le texte du bouton avec le nom du fichier
+      setAudioButtonText(selectedFile.name);
     }
   };
 
-  // Fonction pour déclencher l'input de fichier image
   const handleImageClick = () => {
-    document.getElementById("imageFile").click(); // Simuler un clic sur l'input
+    document.getElementById("imageFile").click();
   };
 
   return (
@@ -144,7 +136,6 @@ function AddDemo() {
         </div>
         <div className="thirdContainer">
           <div className="addFile">
-            {/* Bouton personnalisé pour le fichier audio */}
             <button type="button" onClick={handleAudioClick}>
               {audioButtonText}
               <MdOutlineLink />
@@ -152,14 +143,13 @@ function AddDemo() {
             <input
               type="file"
               id="audioFile"
-              style={{ display: "none" }} // Caché
+              style={{ display: "none" }}
               accept="audio/*"
-              onChange={handleAudioChange} // Changer de fichier
+              onChange={handleAudioChange}
               required
             />
           </div>
           <div className="addImage">
-            {/* Bouton personnalisé pour l'image */}
             <button type="button" onClick={handleImageClick}>
               Choisir une image
               <FaImages />
@@ -167,7 +157,7 @@ function AddDemo() {
             <input
               type="file"
               id="imageFile"
-              style={{ display: "none" }} // Caché
+              style={{ display: "none" }}
               accept="image/*"
               onChange={(e) => setImage(e.target.files[0])}
             />

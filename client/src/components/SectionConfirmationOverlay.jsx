@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/ConfirmationOverlay.css"; // Le fichier CSS pour le style
+import "../styles/ConfirmationOverlay.css";
 
 function SectionConfirmationOverlay({ onCancel, onConfirm, sectionTitle }) {
   return (

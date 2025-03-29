@@ -5,7 +5,6 @@ import { IoBookmarks } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { FaFile } from "react-icons/fa6";
 
-// Tableau d'objets correspondant au menu de la side bar gauche
 const MenuList = [
   {
     id: 1,

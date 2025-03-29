@@ -31,8 +31,6 @@
     width: 900px;
   }
   
-  /* Première ligne de formulaire */
-  
   .firstContainer {
     display: flex;
     gap: 50px;
@@ -90,28 +88,30 @@
   .firstContainer .addSection select {
     width: 100%;
     height: 100%;
-    background-color: transparent; /* Ajout : fond transparent pour harmoniser avec le conteneur */
-    border: none; /* Ajout : suppression des bordures blanches */
-    color: white; /* Ajout : texte blanc pour le contraste */
-    font-size: 15px; /* Ajout : taille de texte unifiée */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 15px;
   }
   
   .firstContainer .addTitle input::placeholder,
   .secondContainer textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5); /* Placeholder stylé */
+    color: rgba(255, 255, 255, 0.5);
   }
   
   .secondContainer textarea {
     margin-top: 4px;
   }
-  
-  .firstContainer .addTitle input:focus,
-  .firstContainer .addSection select:focus,
-  .secondContainer textarea:focus {
-    outline: none; /* Supprimer la bordure par défaut */
+
+  .firstContainer .addSection select:hover {
+    color: black;
+    background-color: transparent;
   }
   
-  /* Deuxième ligne de formulaire (description) */
+  .firstContainer .addTitle input:focus,
+  .secondContainer textarea:focus {
+    outline: none;
+  }
   
   .secondContainer {
     border-radius: 15px;
@@ -121,20 +121,17 @@
     align-items: center;
     padding: 10px 20px;
     margin-left: 15px;
-    /* width: 900px; */
     height: 250px;
   }
   
   .secondContainer textarea {
     width: 100%;
     height: 100%;
-    background-color: transparent; /* Ajout : fond transparent pour harmoniser avec le conteneur */
-    border: none; /* Ajout : suppression des bordures blanches */
-    color: white; /* Ajout : texte blanc pour le contraste */
-    font-size: 16px; /* Ajout : taille de texte unifiée */
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
   }
-  
-  /* Troisième ligne de formulaire (boutons) */
   
   .thirdContainer {
     display: flex;

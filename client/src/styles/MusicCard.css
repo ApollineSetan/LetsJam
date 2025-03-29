@@ -14,8 +14,7 @@
       rgba(77, 37, 174, 0.4) 100%
     );
     cursor: pointer;
-    transition: transform 0.3s ease-in-out; /* Ajout de la transition pour l'effet zoom */
-    /* Supprimer overflow: hidden pour permettre au menu de déborder */
+    transition: transform 0.3s ease-in-out;
   }
   
   .musicCardContainer::before {
@@ -43,7 +42,7 @@
       rgba(126, 95, 197, 0.4) 100%
     );
     box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05); /* Effet de zoom sur la carte */
+    transform: scale(1.05);
   }
   
   .musicCardContainer:hover::before {
@@ -140,10 +139,10 @@
   
   .separator {
     border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Bordure en haut pour le trait */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     margin: 5px 0;
-    width: 80%; /* Largeur du trait */
-    display: block; /* S'assurer que le <hr> est un bloc */
-    margin-left: auto; /* Aligner à gauche */
-    margin-right: auto; /* Aligner à droite */
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }

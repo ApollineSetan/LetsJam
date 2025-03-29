@@ -8,7 +8,7 @@ function TopBar() {
   const navigate = useNavigate();
 
   const handleReturnClick = () => {
-    navigate(-1); // Cela va revenir à la page précédente dans l'historique
+    navigate(-1);
   };
 
   return (

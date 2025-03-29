@@ -1,14 +1,14 @@
 .overlay {
-    position: fixed; /* Assure que l'overlay est positionné par rapport à la fenêtre entière */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center; /* Centre l'élément horizontalement */
-    align-items: center; /* Centre l'élément verticalement */
-    z-index: 1000; /* S'assure que l'overlay est au-dessus des autres éléments */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
   }
   
   .confirmationBox {
@@ -17,10 +17,10 @@
     border-radius: 20px;
     border: solid 1px white;
     text-align: center;
-    max-width: 500px; /* Limite la taille de la boîte de confirmation */
-    width: 100%; /* Utilise toute la largeur disponible jusqu'à 500px */
+    max-width: 500px;
+    width: 100%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1010; /* S'assure que la boîte est au-dessus du fond de l'overlay */
+    z-index: 1010;
   }
   
   .confirmationBox h3 {
