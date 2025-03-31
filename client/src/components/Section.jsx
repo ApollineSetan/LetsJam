@@ -5,6 +5,7 @@ import { useDemoContext } from "../contexts/DemoContext";
 import { TbTrash } from "react-icons/tb";
 import { SectionConfirmationOverlay } from "./SectionConfirmationOverlay";
 
+// Destructuring functions and state from the context
 function Section({ demos, sectionId }) {
   const {
     deleteDemo,
@@ -13,15 +14,20 @@ function Section({ demos, sectionId }) {
     moveDemosToDefault,
     updateSectionName,
   } = useDemoContext();
+
+  // State to manage the visibility of the confirmation overlay and editing state
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [newSectionName, setNewSectionName] = useState("");
+
+  // Find the section based on the passed sectionId prop, if no section is found, return a message
   const section = sections.find((sec) => sec.id === sectionId);
 
   if (!section) {
     return <p>Aucune section sélectionnée.</p>;
   }
 
+  // Functions to handle the deletion of a section by showing or hiding the confirmation overlay
   const handleDeleteSection = () => {
     setOverlayVisible(true);
   };
@@ -31,11 +37,12 @@ function Section({ demos, sectionId }) {
   };
 
   const handleConfirmDelete = () => {
-    moveDemosToDefault(section.id);
+    moveDemosToDefault(section.id); // Move demos to default section before deleting
     deleteSection(section.id);
     setOverlayVisible(false);
   };
 
+  // Functions to handle the editing of a section's name
   const handleNameEdit = () => {
     setIsEditingName(true);
     setNewSectionName(section.name);
@@ -55,6 +62,7 @@ function Section({ demos, sectionId }) {
   return (
     <div className="sectionContainer">
       <div className="sectionHeader">
+        {/* Displaying the section name, allowing it to be edited on double-click */}
         {isEditingName ? (
           <input
             type="text"
@@ -73,6 +81,7 @@ function Section({ demos, sectionId }) {
         <TbTrash className="deleteIcon" onClick={handleDeleteSection} />
       </div>
 
+      {/* Filter and map the demos to display only those that belong to the current section */}
       <div className="musicCardGrid">
         {demos
           .filter((demo) => demo.sectionId === section.id)
@@ -80,7 +89,8 @@ function Section({ demos, sectionId }) {
             <MusicCard key={demo.id} demo={demo} deleteDemo={deleteDemo} />
           ))}
       </div>
-
+      
+      {/* Conditionally render the confirmation overlay when deletion is confirmed */}
       {isOverlayVisible && (
         <SectionConfirmationOverlay
           sectionTitle={section.name}
