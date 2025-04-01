@@ -1,10 +1,10 @@
-const express = require("express");
-const sectionController = require("../controllers/sectionController");
+// routes/sectionRoutes.js
+import express from 'express';
+import { getAllSections, addSection } from '../controllers/sectionController.js';
 
 const router = express.Router();
 
-router.get("/", sectionController.getSections);
-router.post("/", sectionController.createSection);
-router.delete("/:id", sectionController.deleteSection);
+router.get('/', getAllSections);
+router.post('/', addSection);
 
-module.exports = router;
+export default router;

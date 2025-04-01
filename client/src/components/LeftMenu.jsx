@@ -7,9 +7,11 @@ import { useLocation } from "react-router-dom";
 
 function LeftMenu() {
 
+  // State to manage the active index of the menu items
   const [activeIndex, setActiveIndex] = useState(null);
   const location = useLocation();
 
+  // Effect to set the active index based on the current path
   useEffect(() => {
     if (location.pathname === "/add-demo") {
       setActiveIndex(2);
@@ -29,7 +31,7 @@ function LeftMenu() {
           <img src={logoImage} alt="Logo" className="logoImage" />
         </i>
       </div>
-
+      {/* Menu component to display the menu items */}
       <Menu
         menuObject={MenuList.slice(0, 6)}
         className="primaryMenu"

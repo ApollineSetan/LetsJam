@@ -1,27 +1,6 @@
-const sectionModel = require("../models/sectionModel");
+// services/sectionService.js
+import Section from '../models/Section.js';
 
-const getSections = async () => {
-  try {
-    return await sectionModel.getSections();
-  } catch (error) {
-    throw error;
-  }
+export const createSection = async (name) => {
+  return await Section.create({ name });
 };
-
-const createSection = async (name) => {
-  try {
-    return await sectionModel.createSection(name);
-  } catch (error) {
-    throw error;
-  }
-};
-
-const deleteSection = async (id) => {
-  try {
-    return await sectionModel.deleteSection(id);
-  } catch (error) {
-    throw error;
-  }
-};
-
-module.exports = { getSections, createSection, deleteSection };

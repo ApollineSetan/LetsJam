@@ -5,6 +5,7 @@ import { IoBookmarks } from "react-icons/io5";
 import { IoMdSettings } from "react-icons/io";
 import { FaFile } from "react-icons/fa6";
 
+// This component exports a list of menu items with their respective icons and names.
 const MenuList = [
   {
     id: 1,

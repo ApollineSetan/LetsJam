@@ -1,38 +1,28 @@
-const demoService = require("../services/demoService");
+// controllers/demoController.js
+import Demo from '../models/Demo.js';
 
-const getDemos = async (req, res) => {
+export const getAllDemos = async (req, res) => {
   try {
-    const demos = await demoService.getDemos();
+    const demos = await Demo.findAll();
     res.json(demos);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
-const createDemo = async (req, res) => {
-  const { title, description, duration, image_url, section_id } = req.body;
+export const addDemo = async (req, res) => {
   try {
-    const newDemo = await demoService.createDemo({
+    const { title, description, image, duration, section_id } = req.body;
+    const newDemo = await Demo.create({
       title,
       description,
+      image,
       duration,
-      image_url,
-      section_id,
+      createdAt: new Date(),
+      section_id
     });
     res.status(201).json(newDemo);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
-
-const deleteDemo = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await demoService.deleteDemo(id);
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
-module.exports = { getDemos, createDemo, deleteDemo };

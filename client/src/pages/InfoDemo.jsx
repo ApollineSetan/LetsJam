@@ -5,12 +5,14 @@ import { useDemoContext } from "../contexts/DemoContext";
 import { RiImageEditFill } from "react-icons/ri";
 import "../styles/InfoDemo.css";
 
+// This component allows users to see and edit an existing demo's title, description, and image.
 function InfoDemo() {
   const { demoId } = useParams();
   const { demos, updateDemo } = useDemoContext();
   const demo = demos.find((demo) => demo.id === demoId);
   const navigate = useNavigate();
 
+  // State variables to manage the demo's title, description, image, and image preview
   const [title, setTitle] = useState(demo?.title || "");
   const [description, setDescription] = useState(demo?.description || "");
   const [image, setImage] = useState(demo?.image || "");
@@ -25,7 +27,7 @@ function InfoDemo() {
       setImage(demo.image);
       setImagePreview(demo.image ? URL.createObjectURL(demo.image) : "");
     }
-  }, [demo]);
+  }, [demo]); // Update state when demo changes
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,6 +35,7 @@ function InfoDemo() {
     setImagePreview(URL.createObjectURL(file));
   };
 
+  // Function to handle form submission and update the demo, then navigate to the home page
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedDemo = {
@@ -44,12 +47,14 @@ function InfoDemo() {
     navigate("/");
   };
 
+  // Function to handle the click event for playing the music
   return (
     <div className="mainContainer">
       <TopBar />
       <div className="sectionTitle">
         <h2>Modifier la démo</h2>
       </div>
+
       {demo ? (
         <form onSubmit={handleSubmit} className="editForm">
           <div className="imageCard">

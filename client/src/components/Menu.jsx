@@ -1,5 +1,7 @@
 import React from "react";
 
+// This component renders a menu with a list of items.
+// Each item can be clicked to trigger a callback function.
 function Menu({ menuObject, className, activeIndex, onMenuClick }) {
   return (
     <div className={`MenuContainer ${className}`}>

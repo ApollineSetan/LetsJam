@@ -1,27 +1,6 @@
-const demoModel = require("../models/demoModel");
+// services/demoService.js
+import Demo from '../models/Demo.js';
 
-const getDemos = async () => {
-  try {
-    return await demoModel.getDemos();
-  } catch (error) {
-    throw error;
-  }
+export const createDemo = async (title, description, image, duration, section_id) => {
+  return await Demo.create({ title, description, image, duration, section_id });
 };
-
-const createDemo = async (demo) => {
-  try {
-    return await demoModel.createDemo(demo);
-  } catch (error) {
-    throw error;
-  }
-};
-
-const deleteDemo = async (id) => {
-  try {
-    return await demoModel.deleteDemo(id);
-  } catch (error) {
-    throw error;
-  }
-};
-
-module.exports = { getDemos, createDemo, deleteDemo };

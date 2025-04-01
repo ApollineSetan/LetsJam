@@ -1,44 +1,27 @@
-const express = require("express");
-const mysql = require("mysql2");
-const dotenv = require("dotenv");
-const cors = require("cors");
-
-dotenv.config();
-
-const sectionRoutes = require("./routes/sectionRoutes");
-const demoRoutes = require("./routes/demoRoutes");
+// server.js
+import express from 'express';
+import cors from 'cors';
+import demoRoutes from './routes/demoRoutes.js';
+import sectionRoutes from './routes/sectionRoutes.js';
+import sequelize from './config/database.js';
 
 const app = express();
-const port = 8080;
+const PORT = 5000;
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error("Erreur de connexion à la base de données:", err.stack);
-    return;
-  }
-  console.log("Connecté à la base de données MySQL");
-});
-
-module.exports = db;
-
-app.use(express.json());
-
+// Middleware
 app.use(cors());
+app.use(express.json()); // Pour parser les requêtes JSON
 
-app.get("/api", (req, res) => {
-  res.send("Serveur en fonctionnement");
-});
+// Routes
+app.use('/api/demos', demoRoutes);
+app.use('/api/sections', sectionRoutes);
 
-app.use("/api/sections", sectionRoutes);
-app.use("/api/demos", demoRoutes);
-
-app.listen(port, () => {
-  console.log(`Serveur démarré sur le port ${port}`);
+// Synchroniser la base de données et démarrer le serveur
+sequelize.sync().then(() => {
+  console.log('Base de données synchronisée!');
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}).catch(error => {
+  console.error('Error syncing database:', error);
 });

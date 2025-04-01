@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/ConfirmationOverlay.css";
 
+// This component is used to display a confirmation overlay when the user tries to delete a demo.
 function DemoConfirmationOverlay({ onCancel, onConfirm, demoTitle }) {
   return (
     <div className="overlay">

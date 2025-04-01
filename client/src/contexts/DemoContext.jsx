@@ -13,13 +13,11 @@ export const DemoProvider = ({ children }) => {
   const [demos, setDemos] = useState([]);
   const [sections, setSections] = useState([]);
 
-  // Function to add a new demo and assign it to a section
   const addDemo = (demo, sectionId) => {
     const newDemo = { ...demo, id: uuidv4(), sectionId };
     setDemos([...demos, newDemo]);
   };
 
-  // Function to update demo details
   const updateDemo = (demoId, updatedDemo) => {
     setDemos(
       demos.map((demo) =>
@@ -28,7 +26,6 @@ export const DemoProvider = ({ children }) => {
     );
   };
 
-  // Function to add a new section
   const addSection = (sectionName) => {
     const newSection = { name: sectionName, id: uuidv4() };
     setSections([...sections, newSection]);
@@ -47,12 +44,10 @@ export const DemoProvider = ({ children }) => {
     );
   };
 
-  // Function to delete a demo
   const deleteDemo = (demoId) => {
     setDemos(demos.filter((demo) => demo.id !== demoId));
   };
 
-  // Function to update a section's name
   const updateSectionName = (sectionId, newName) => {
     setSections(
       sections.map((section) =>

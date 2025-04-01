@@ -1,44 +1,45 @@
-const db = require("../server");
+// models/Demo.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import Section from './Section.js';
 
-const getDemos = () => {
-  return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM demos", (err, results) => {
-      if (err) {
-        console.error("Erreur lors de la récupération des démos:", err);
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
-};
+const Demo = sequelize.define('Demo', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  duration: {
+    type: DataTypes.TIME,
+    allowNull: false
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  section_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: Section,
+      key: 'id'
+    }
+  }
+});
 
-const createDemo = (demo) => {
-  const { title, description, duration, image_url, section_id } = demo;
-  return new Promise((resolve, reject) => {
-    db.query(
-      "INSERT INTO demos (title, description, duration, image_url, section_id) VALUES (?, ?, ?, ?, ?)",
-      [title, description, duration, image_url, section_id],
-      (err, results) => {
-        if (err) {
-          console.error("Erreur lors de la création de la démo:", err);
-          return reject(err);
-        }
-        resolve({ id: results.insertId, ...demo });
-      }
-    );
-  });
-};
+Demo.belongsTo(Section, { foreignKey: 'section_id' });
+Section.hasMany(Demo, { foreignKey: 'section_id' });
 
-const deleteDemo = (id) => {
-  return new Promise((resolve, reject) => {
-    db.query("DELETE FROM demos WHERE id = ?", [id], (err, results) => {
-      if (err) {
-        console.error("Erreur lors de la suppression de la démo:", err);
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
-};
-
-module.exports = { getDemos, createDemo, deleteDemo };
+export default Demo;

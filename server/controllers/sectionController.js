@@ -1,32 +1,21 @@
-const sectionService = require("../services/sectionService");
+// controllers/sectionController.js
+import Section from '../models/Section.js';
 
-const getSections = async (req, res) => {
+export const getAllSections = async (req, res) => {
   try {
-    const sections = await sectionService.getSections();
+    const sections = await Section.findAll();
     res.json(sections);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
-const createSection = async (req, res) => {
-  const { name } = req.body;
+export const addSection = async (req, res) => {
   try {
-    const newSection = await sectionService.createSection(name);
+    const { name } = req.body;
+    const newSection = await Section.create({ name });
     res.status(201).json(newSection);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ message: error.message });
   }
 };
-
-const deleteSection = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await sectionService.deleteSection(id);
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
-module.exports = { getSections, createSection, deleteSection };

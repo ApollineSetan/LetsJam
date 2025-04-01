@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FaImages } from "react-icons/fa";
 import { useDemoContext } from "../contexts/DemoContext";
 
+// This component allows users to add a new demo audio file along with its title, description, section, and optional image.
 function AddDemo() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -27,6 +28,7 @@ function AddDemo() {
       return;
     }
 
+    // Check if the file is an audio file and its duration is less than 1 hour
     const validExtensions = [
       "mp3",
       "flac",
@@ -46,6 +48,7 @@ function AddDemo() {
       return;
     }
 
+    // Create an audio element to get the duration of the audio file and check its length
     const audio = new Audio(URL.createObjectURL(file));
     audio.onloadedmetadata = () => {
       const duration = audio.duration;
@@ -69,6 +72,7 @@ function AddDemo() {
         duration: formattedDuration,
       };
 
+      // Call the addDemo function from the context to add the new demo
       addDemo(demo, sectionId);
       setTitle("");
       setDescription("");
@@ -76,6 +80,7 @@ function AddDemo() {
       setImage(null);
       setAudioButtonText("Ajouter un fichier audio");
 
+      // Redirect to the home page after adding the demo
       navigate("/");
     };
   };
@@ -96,6 +101,8 @@ function AddDemo() {
     document.getElementById("imageFile").click();
   };
 
+  // Form submission handler to add a new demo audio file
+  // and redirect to the home page after successful addition
   return (
     <div className="mainContainer">
       <TopBar />
@@ -118,6 +125,7 @@ function AddDemo() {
               value={sectionId}
               onChange={(e) => setSectionId(e.target.value)}
             >
+              {/* Displaying the sections in a dropdown menu for selection */}
               <option value="">Ranger dans une section</option>
               {sections.map((section) => (
                 <option key={section.id} value={section.id}>

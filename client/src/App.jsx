@@ -9,6 +9,7 @@ import { AddDemo } from "./pages/AddDemo";
 import { InfoDemo } from "./pages/InfoDemo";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+// This is the main App component that sets up the routing and context for the application.
 function App() {
   return (
     <DemoProvider>
@@ -20,7 +21,6 @@ function App() {
             <Route path="/add-demo" element={<AddDemo />} />
             <Route path="/edit-demo/:demoId" element={<InfoDemo />} />
           </Routes>
-
           <div className="background"></div>
         </div>
       </Router>

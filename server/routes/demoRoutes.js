@@ -1,10 +1,10 @@
-const express = require("express");
-const demoController = require("../controllers/demoController");
+// routes/demoRoutes.js
+import express from 'express';
+import { getAllDemos, addDemo } from '../controllers/demoController.js';
 
 const router = express.Router();
 
-router.get("/", demoController.getDemos);
-router.post("/", demoController.createDemo);
-router.delete("/:id", demoController.deleteDemo);
+router.get('/', getAllDemos);
+router.post('/', addDemo);
 
-module.exports = router;
+export default router;

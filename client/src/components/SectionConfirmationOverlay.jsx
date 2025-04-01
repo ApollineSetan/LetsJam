@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/ConfirmationOverlay.css";
 
+// This component is used to display a confirmation overlay when a user attempts to delete a section.
 function SectionConfirmationOverlay({ onCancel, onConfirm, sectionTitle }) {
   return (
     <div className="overlay">

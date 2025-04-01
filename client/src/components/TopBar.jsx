@@ -4,9 +4,11 @@ import "../styles/TopBar.css";
 import { BiSearchAlt, BiSolidBell } from "react-icons/bi";
 import { IoIosArrowBack } from "react-icons/io";
 
+// Renders a top bar with a return button, a search box, and a notification button
 function TopBar() {
   const navigate = useNavigate();
 
+  // Function to handle the click event for the return button
   const handleReturnClick = () => {
     navigate(-1);
   };
