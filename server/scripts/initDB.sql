@@ -1,0 +1,19 @@
+DROP DATABASE IF EXISTS letsjam;
+CREATE DATABASE letsjam;
+USE letsjam;
+
+CREATE TABLE section (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(50) NOT NULL,
+);
+
+CREATE TABLE demo (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ title VARCHAR(50) NOT NULL,
+ description TEXT NULL,
+ image VARCHAR(255) NULL,
+ duration TIME NOT NULL,
+ createdAt DATETIME NOT NULL,
+ section_id INT NULL,
+ FOREIGN KEY (section_id) REFERENCES section(id) ON DELETE SET NULL
+);
