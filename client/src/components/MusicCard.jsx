@@ -14,7 +14,7 @@ function MusicCard({ demo, deleteDemo }) {
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
 
-// The background image is set using the image prop passed to the component. If no image is provided, it defaults to null.
+  // The background image is set using the image prop passed to the component. If no image is provided, it defaults to null.
   const backgroundImage = image ? `url(${URL.createObjectURL(image)})` : null;
   const style = backgroundImage
     ? {

@@ -6,20 +6,19 @@ import { MusicCard } from "./MusicCard";
 function SectionDefault({ demos, deleteDemo }) {
   const demosWithoutSection = demos.filter((demo) => !demo.sectionId);
 
-  if (demosWithoutSection.length === 0) { // If there are no demos without a section, return null
+  if (demosWithoutSection.length === 0) {
+    // If there are no demos without a section, return null
     return null;
   }
 
   return (
-    <div className="sectionDefault">
-      <h1>Section par défaut</h1>
-      <div className="musicCardGrid">
+    <div className="sectionDefaultContainer">
+      <div className="sectionDefaultHeader">
+        <h1>Section par défaut</h1>
+      </div>
+      <div className="musicCardDefaultGrid">
         {demosWithoutSection.map((demo) => (
-          <MusicCard
-            key={demo.id}
-            demo={demo}
-            deleteDemo={deleteDemo}
-          />
+          <MusicCard key={demo.id} demo={demo} deleteDemo={deleteDemo} />
         ))}
       </div>
     </div>

@@ -89,7 +89,7 @@ function Section({ demos, sectionId }) {
             <MusicCard key={demo.id} demo={demo} deleteDemo={deleteDemo} />
           ))}
       </div>
-      
+
       {/* Conditionally render the confirmation overlay when deletion is confirmed */}
       {isOverlayVisible && (
         <SectionConfirmationOverlay

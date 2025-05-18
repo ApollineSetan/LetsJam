@@ -1,5 +1,5 @@
 import express from "express";
-import * as SectionController from "../controllers/sectionController.js";
+import SectionController from "../controllers/sectionController.js";
 
 const router = express.Router();
 

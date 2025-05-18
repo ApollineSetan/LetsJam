@@ -1,24 +1,58 @@
-.sectionDefault {
-    width: 100%;
-    display: flex;
+.sectionDefaultContainer {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.sectionDefaultHeader {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 15px 15px 0;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.sectionDefaultHeader h1 {
+  font-size: 17px;
+  color: rgb(255, 255, 255, 0.7);
+}
+
+.musicCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+/* display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    box-sizing: border-box;
-    height: auto;
-  }
-  
-  .sectionDefault h1 {
-    padding-left: 20px;
-    font-size: 17px;
-    color: rgb(255, 255, 255, 0.7);
-    width: 100%;
-  }
-  
-  .musicCardGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
-    width: 100%;
-    justify-items: center;
-    margin-top: 20px;
-  }
+    box-sizing: border-box; */
+
+/* .sectionHeader {
+  display: flex;
+  align-items: baseline;
+}
+
+.sectionDefault h1 {
+  padding-left: 20px;
+  font-size: 17px;
+  color: rgb(255, 255, 255, 0.7);
+  width: 100%;
+}
+
+.musicCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  width: 100%;
+  justify-items: center;
+  margin-top: 20px;
+} */

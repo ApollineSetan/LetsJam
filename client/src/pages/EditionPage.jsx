@@ -94,7 +94,7 @@ function EditionPage() {
         </div>
       )}
       <div className="sectionsDefault">
-        {!isAnyDemoPresent && (
+        {!isAnyDemoPresent && !showInput && (
           <h1>Aucune démo n'a été ajoutée pour le moment.</h1>
         )}
 
@@ -102,11 +102,7 @@ function EditionPage() {
 
         {/* Mapping through the sections to display each section with its respective demos */}
         {sections.map((section) => (
-          <Section
-            key={section.id}
-            demos={demos}
-            sectionId={section.id}
-          />
+          <Section key={section.id} demos={demos} sectionId={section.id} />
         ))}
       </div>
     </div>

@@ -1,148 +1,149 @@
 .musicCardContainer {
-    width: 350px;
-    height: 160px;
-    border: 2px solid #e33e9e6a;
-    border-radius: 16px;
-    padding: 20px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(
-      180deg,
-      rgba(227, 62, 159, 0.4) 0%,
-      rgba(77, 37, 174, 0.4) 100%
-    );
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .musicCardContainer::before {
-    content: "";
-    position: absolute;
-    border-radius: 16px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(227, 62, 159, 0.4) 0%,
-      rgba(77, 37, 174, 0.4) 100%
-    );
-    z-index: 1;
-  }
-  
-  .musicCardContainer:hover {
-    border: 2px solid #ffffff;
-    transition: 0.3s ease;
-    background: linear-gradient(
-      180deg,
-      rgba(223, 108, 175, 0.4) 0%,
-      rgba(126, 95, 197, 0.4) 100%
-    );
-    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05);
-  }
-  
-  .musicCardContainer:hover::before {
-    background: linear-gradient(
-      180deg,
-      rgba(223, 108, 175, 0.4) 0%,
-      rgba(126, 95, 197, 0.4) 100%
-    );
-  }
-  
-  .iconsMusicCard {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.7);
-    z-index: 2;
-  }
-  
-  .iconsMusicCard i:hover {
-    color: white;
-  }
-  
-  .iconPlay {
-    margin-top: 15px;
-    z-index: 2;
-  }
-  
-  .iconPlay img {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .infoMusic {
-    text-align: center;
-    z-index: 2;
-  }
-  
-  .songName {
-    margin-top: 5px;
-    font-size: 15px;
-    color: white;
-  }
-  
-  .durationMusic {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.5);
-    display: block;
-    margin-top: 5px;
-  }
-  
-  .musicImage {
-    margin-top: 10px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  
-  .menuOptions {
-    position: absolute;
-    top: 35px;
-    right: -120px;
-    background-color: #000d26;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    width: 150px;
-    z-index: 1000;
-    padding: 10px 0;
-  }
-  
-  .menuOptionShare,
-  .menuOptionEdit {
-    display: flex;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: rgb(255, 255, 255);
-    font-size: 14px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .menuOptionShare:hover,
-  .menuOptionEdit:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-  }
-  
-  .menuOptionShare svg,
-  .menuOptionEdit svg {
-    font-size: 15px;
-    color: rgb(255, 255, 255);
-    margin-right: 10px;
-  }
-  
-  .separator {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 5px 0;
-    width: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  width: 350px;
+  height: 160px;
+  border: 2px solid #e33e9e6a;
+  border-radius: 16px;
+  margin-left: 20px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    rgba(227, 62, 159, 0.4) 0%,
+    rgba(77, 37, 174, 0.4) 100%
+  );
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.musicCardContainer::before {
+  content: "";
+  position: absolute;
+  border-radius: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(227, 62, 159, 0.4) 0%,
+    rgba(77, 37, 174, 0.4) 100%
+  );
+  z-index: 1;
+}
+
+.musicCardContainer:hover {
+  border: 2px solid #ffffff;
+  transition: 0.3s ease;
+  background: linear-gradient(
+    180deg,
+    rgba(223, 108, 175, 0.4) 0%,
+    rgba(126, 95, 197, 0.4) 100%
+  );
+  box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.musicCardContainer:hover::before {
+  background: linear-gradient(
+    180deg,
+    rgba(223, 108, 175, 0.4) 0%,
+    rgba(126, 95, 197, 0.4) 100%
+  );
+}
+
+.iconsMusicCard {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
+.iconsMusicCard i:hover {
+  color: white;
+}
+
+.iconPlay {
+  margin-top: 15px;
+  z-index: 2;
+}
+
+.iconPlay img {
+  width: 60px;
+  height: 60px;
+}
+
+.infoMusic {
+  text-align: center;
+  z-index: 2;
+}
+
+.songName {
+  margin-top: 5px;
+  font-size: 15px;
+  color: white;
+}
+
+.durationMusic {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  margin-top: 5px;
+}
+
+.musicImage {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.menuOptions {
+  position: absolute;
+  top: 35px;
+  right: -120px;
+  background-color: #000d26;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 150px;
+  z-index: 1000;
+  padding: 10px 0;
+}
+
+.menuOptionShare,
+.menuOptionEdit {
+  display: flex;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menuOptionShare:hover,
+.menuOptionEdit:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.menuOptionShare svg,
+.menuOptionEdit svg {
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  margin-right: 10px;
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 5px 0;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
