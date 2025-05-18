@@ -36,9 +36,9 @@ function Section({ demos, sectionId }) {
     setOverlayVisible(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     moveDemosToDefault(section.id); // Move demos to default section before deleting
-    deleteSection(section.id);
+    await deleteSection(section.id);
     setOverlayVisible(false);
   };
 

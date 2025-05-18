@@ -47,10 +47,31 @@ export const DemoProvider = ({ children }) => {
     setSections([...sections, newSection]);
   };
 
-  // Functions to delete a section and move its demos to the default section
-  const deleteSection = (sectionId) => {
-    setSections(sections.filter((section) => section._id !== sectionId));
+  const deleteSection = async (sectionId) => {
+    try {
+      const deleteSectionFromAPI = await SectionService.deleteSection(
+        sectionId
+      );
+      const transformedSection = {
+        id: deleteSectionFromAPI._id,
+        name: deleteSectionFromAPI._name,
+      };
+
+      setSections((prevSections) =>
+        prevSections.filter((section) => section.id !== sectionId)
+      );
+    } catch (error) {
+      console.error(
+        "[DemoContext] deleteSection - failed to delete section:",
+        error
+      );
+    }
   };
+
+  // Functions to delete a section and move its demos to the default section
+  // const deleteSection = (sectionId) => {
+  //   setSections(sections.filter((section) => section._id !== sectionId));
+  // };
 
   const moveDemosToDefault = (sectionId) => {
     setDemos(
