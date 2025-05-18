@@ -1,14 +1,13 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import SectionService from "../../services/sectionService";
 
-// Create a context and a custom hook to manage demo-related state globally
 const DemoContext = createContext();
 
 export const useDemoContext = () => {
   return useContext(DemoContext);
 };
 
-// States to store arrays of demos and sections
 export const DemoProvider = ({ children }) => {
   const [demos, setDemos] = useState([]);
   const [sections, setSections] = useState([]);
@@ -17,6 +16,23 @@ export const DemoProvider = ({ children }) => {
     const newDemo = { ...demo, id: uuidv4(), sectionId };
     setDemos([...demos, newDemo]);
   };
+
+  useEffect(() => {
+    const fetchSections = async () => {
+      try {
+        const data = await SectionService.getAllSections();
+        const transformed = data.map(({ _id, _name }) => ({
+          id: _id,
+          name: _name,
+        }));
+        console.log("Sections fetchées :", data);
+        setSections(transformed);
+      } catch (error) {
+        console.error("Error fetching sections:", error);
+      }
+    };
+    fetchSections();
+  }, []);
 
   const updateDemo = (demoId, updatedDemo) => {
     setDemos(
@@ -33,7 +49,7 @@ export const DemoProvider = ({ children }) => {
 
   // Functions to delete a section and move its demos to the default section
   const deleteSection = (sectionId) => {
-    setSections(sections.filter((section) => section.id !== sectionId));
+    setSections(sections.filter((section) => section._id !== sectionId));
   };
 
   const moveDemosToDefault = (sectionId) => {
@@ -51,7 +67,7 @@ export const DemoProvider = ({ children }) => {
   const updateSectionName = (sectionId, newName) => {
     setSections(
       sections.map((section) =>
-        section.id === sectionId ? { ...section, name: newName } : section
+        section._id === sectionId ? { ...section, name: newName } : section
       )
     );
   };

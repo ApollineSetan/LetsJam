@@ -45,7 +45,7 @@ function Section({ demos, sectionId }) {
   // Functions to handle the editing of a section's name
   const handleNameEdit = () => {
     setIsEditingName(true);
-    setNewSectionName(section.name);
+    setNewSectionName(section._name);
   };
 
   const handleNameChange = (e) => {
