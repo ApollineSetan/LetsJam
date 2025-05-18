@@ -64,12 +64,46 @@ export const DemoProvider = ({ children }) => {
     setDemos(demos.filter((demo) => demo.id !== demoId));
   };
 
-  const updateSectionName = (sectionId, newName) => {
-    setSections(
-      sections.map((section) =>
-        section._id === sectionId ? { ...section, name: newName } : section
-      )
-    );
+  const updateSection = async (sectionId, newName) => {
+    console.log("[DemoContext] updateSection called with:", sectionId, newName);
+    try {
+      const updatedSectionFromAPI = await SectionService.updateSection(
+        sectionId,
+        { name: newName }
+      );
+      console.log(
+        "[DemoContext] updateSection - API response:",
+        updatedSectionFromAPI
+      );
+
+      // Transformer la réponse de l'API en format local
+      const transformedSection = {
+        id: updatedSectionFromAPI._id,
+        name: updatedSectionFromAPI._name,
+      };
+      console.log(
+        "[DemoContext] updateSection - transformed section:",
+        transformedSection
+      );
+
+      setSections((prevSections) => {
+        const updatedSections = prevSections.map((section) =>
+          section.id === sectionId
+            ? { ...section, name: transformedSection.name }
+            : section
+        );
+        console.log(
+          "[DemoContext] updateSection - updated local sections:",
+          updatedSections
+        );
+        return updatedSections;
+      });
+    } catch (error) {
+      console.error(
+        "[DemoContext] updateSection - failed to update section:",
+        error
+      );
+    }
   };
 
   // Return the context provider with all the state and functions to be accessible in child components
@@ -80,11 +114,11 @@ export const DemoProvider = ({ children }) => {
         addDemo,
         deleteDemo,
         updateDemo,
-        addSection,
         sections,
+        addSection,
         deleteSection,
         moveDemosToDefault,
-        updateSectionName,
+        updateSection,
       }}
     >
       {children} {/* Render child components inside the provider */}

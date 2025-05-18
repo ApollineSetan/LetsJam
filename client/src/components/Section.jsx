@@ -12,7 +12,7 @@ function Section({ demos, sectionId }) {
     sections,
     deleteSection,
     moveDemosToDefault,
-    updateSectionName,
+    updateSection,
   } = useDemoContext();
 
   // State to manage the visibility of the confirmation overlay and editing state
@@ -45,7 +45,7 @@ function Section({ demos, sectionId }) {
   // Functions to handle the editing of a section's name
   const handleNameEdit = () => {
     setIsEditingName(true);
-    setNewSectionName(section._name);
+    setNewSectionName(section._name || "");
   };
 
   const handleNameChange = (e) => {
@@ -54,10 +54,19 @@ function Section({ demos, sectionId }) {
 
   const handleNameSubmit = () => {
     if (newSectionName.trim() !== "") {
-      updateSectionName(section.id, newSectionName);
+      updateSection(section.id, newSectionName);
       setIsEditingName(false);
+    } else {
+      console.log("Le nom de la section ne peut pas être vide.");
     }
   };
+
+  // const handleNameSubmit = () => {
+  //   if (newSectionName.trim() !== "") {
+  //     updateSectionName(section.id, newSectionName);
+  //     setIsEditingName(false);
+  //   }
+  // };
 
   return (
     <div className="sectionContainer">
@@ -66,7 +75,7 @@ function Section({ demos, sectionId }) {
         {isEditingName ? (
           <input
             type="text"
-            value={newSectionName}
+            value={newSectionName || ""}
             onChange={handleNameChange}
             onBlur={handleNameSubmit}
             onKeyDown={(e) => {
