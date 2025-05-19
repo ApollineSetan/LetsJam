@@ -113,3 +113,7 @@
   color: rgb(255, 255, 255, 0.7);
   width: 100%;
 }
+
+.emptyState h1 {
+  padding-bottom: 40px;
+}

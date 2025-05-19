@@ -95,7 +95,9 @@ function EditionPage() {
       )}
       <div className="sectionsDefault">
         {!isAnyDemoPresent && !showInput && (
-          <h1>Aucune démo n'a été ajoutée pour le moment.</h1>
+          <div className="emptyState">
+            <h1>Aucune démo n'a été ajoutée pour le moment.</h1>
+          </div>
         )}
 
         <SectionDefault demos={demos} deleteDemo={deleteDemo} />

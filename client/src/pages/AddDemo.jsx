@@ -129,7 +129,7 @@ function AddDemo() {
               <option value="">Ranger dans une section</option>
               {sections.map((section) => (
                 <option key={section.id} value={section.id}>
-                  {section._name}
+                  {section.name}
                 </option>
               ))}
             </select>

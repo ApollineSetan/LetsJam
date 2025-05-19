@@ -42,9 +42,22 @@ export const DemoProvider = ({ children }) => {
     );
   };
 
-  const addSection = (sectionName) => {
-    const newSection = { name: sectionName, id: uuidv4() };
-    setSections([...sections, newSection]);
+  const addSection = async (sectionName) => {
+    try {
+      const createdSectionFromAPI = await SectionService.createSection({
+        name: sectionName,
+      });
+      const transformedSection = {
+        id: createdSectionFromAPI._id,
+        name: createdSectionFromAPI._name,
+      };
+      setSections((prevSections) => [...prevSections, transformedSection]);
+    } catch (error) {
+      console.error(
+        "[DemoContext] addSection - failed to create section:",
+        error
+      );
+    }
   };
 
   const deleteSection = async (sectionId) => {
