@@ -2,14 +2,15 @@ import db from "../config/dbConfig.js";
 
 // Constructor
 class Demo {
-  constructor(id, title, description, image, duration, createdAt, section_id) {
+  constructor(id, title, description, image_url, duration, createdAt, section_id, audio_url) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.image = image;
+    this.image_url = image_url;
     this.duration = duration;
     this.createdAt = createdAt;
     this.section_id = section_id;
+    this.audio_url = audio_url;
   }
 
   // Getters and Setters
@@ -31,11 +32,11 @@ class Demo {
   set description(value) {
     this._description = value;
   }
-  get image() {
-    return this._image;
+  get image_url() {
+    return this._image_url;
   }
-  set image(value) {
-    this._image = value;
+  set image_url(value) {
+    this._image_url = value;
   }
   get duration() {
     return this._duration;
@@ -54,6 +55,12 @@ class Demo {
   }
   set section_id(value) {
     this._section_id = value;
+  }
+  get audio_url() {
+    return this._audio_url;
+  }
+  set audio_url(value) {
+    this._audio_url = value;
   }
 }
 
