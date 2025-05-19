@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/Section.css";
 import { MusicCard } from "./MusicCard";
 import { useDemoContext } from "../contexts/DemoContext";
 import { TbTrash } from "react-icons/tb";
 import { SectionConfirmationOverlay } from "./SectionConfirmationOverlay";
 
-// Destructuring functions and state from the context
 function Section({ demos, sectionId }) {
   const {
     deleteDemo,
@@ -15,19 +14,35 @@ function Section({ demos, sectionId }) {
     updateSection,
   } = useDemoContext();
 
-  // State to manage the visibility of the confirmation overlay and editing state
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [newSectionName, setNewSectionName] = useState("");
 
-  // Find the section based on the passed sectionId prop, if no section is found, return a message
+  const inputRef = useRef(null);
+
+  // Déclaration de `section` avant useEffect
   const section = sections.find((sec) => sec.id === sectionId);
+
+  useEffect(() => {
+    if (!isEditingName) return;
+
+    function handleClickOutside(event) {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setIsEditingName(false);
+        setNewSectionName(section.name);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isEditingName, section.name]);
 
   if (!section) {
     return <p>Aucune section sélectionnée.</p>;
   }
 
-  // Functions to handle the deletion of a section by showing or hiding the confirmation overlay
   const handleDeleteSection = () => {
     setOverlayVisible(true);
   };
@@ -37,15 +52,14 @@ function Section({ demos, sectionId }) {
   };
 
   const handleConfirmDelete = async () => {
-    moveDemosToDefault(section.id); // Move demos to default section before deleting
+    moveDemosToDefault(section.id);
     await deleteSection(section.id);
     setOverlayVisible(false);
   };
 
-  // Functions to handle the editing of a section's name
   const handleNameEdit = () => {
     setIsEditingName(true);
-    setNewSectionName(section._name || "");
+    setNewSectionName(section.name || "");
   };
 
   const handleNameChange = (e) => {
@@ -61,19 +75,12 @@ function Section({ demos, sectionId }) {
     }
   };
 
-  // const handleNameSubmit = () => {
-  //   if (newSectionName.trim() !== "") {
-  //     updateSectionName(section.id, newSectionName);
-  //     setIsEditingName(false);
-  //   }
-  // };
-
   return (
     <div className="sectionContainer">
       <div className="sectionHeader">
-        {/* Displaying the section name, allowing it to be edited on double-click */}
         {isEditingName ? (
           <input
+            ref={inputRef}
             type="text"
             value={newSectionName || ""}
             onChange={handleNameChange}
@@ -91,7 +98,6 @@ function Section({ demos, sectionId }) {
         )}
       </div>
 
-      {/* Filter and map the demos to display only those that belong to the current section */}
       <div className="musicCardGrid">
         {demos
           .filter((demo) => demo.sectionId === section.id)
@@ -100,7 +106,6 @@ function Section({ demos, sectionId }) {
           ))}
       </div>
 
-      {/* Conditionally render the confirmation overlay when deletion is confirmed */}
       {isOverlayVisible && (
         <SectionConfirmationOverlay
           sectionTitle={section.name}
