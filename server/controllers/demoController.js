@@ -23,13 +23,31 @@ const demoController = {
     },
 
     async createDemo(req, res) {
-        try {
-            const demo = await demoManager.create(req.body);
-            res.status(201).json(demo);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
+    try {
+      const { title, description, duration, section_id, image_url } = req.body;
+
+      if (!req.file || !req.file.location) {
+        return res.status(400).json({ error: "Audio file is required." });
+      }
+
+      const audio_url = req.file.location;
+
+      const newDemo = {
+        title,
+        description,
+        image_url,
+        duration,
+        section_id,
+        audio_url,
+      };
+
+      const demo = await demoManager.create(newDemo);
+
+      res.status(201).json(demo);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 
     async updateDemo(req, res) {
         try {
