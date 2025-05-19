@@ -86,8 +86,9 @@ function Section({ demos, sectionId }) {
         ) : (
           <h1 onDoubleClick={handleNameEdit}>{section.name}</h1>
         )}
-
-        <TbTrash className="deleteIcon" onClick={handleDeleteSection} />
+        {!isEditingName && (
+          <TbTrash className="deleteIcon" onClick={handleDeleteSection} />
+        )}
       </div>
 
       {/* Filter and map the demos to display only those that belong to the current section */}
