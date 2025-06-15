@@ -58,6 +58,27 @@ export const DemoProvider = ({ children }) => {
     fetchDemos();
   }, []);
 
+  const fetchDemoById = async (demoId) => {
+    try {
+      const demoFromAPI = await DemoService.getDemoById(demoId);
+      const transformedDemo = {
+        id: parseInt(demoFromAPI._id, 10),
+        title: demoFromAPI._title,
+        description: demoFromAPI._description,
+        image: demoFromAPI._image_url,
+        duration: demoFromAPI._duration,
+        sectionId: demoFromAPI._section_id,
+        audio: demoFromAPI._audio_url,
+      };
+      setDemos((prevDemos) => [
+        ...prevDemos.filter((demo) => demo.id !== transformedDemo.id),
+        transformedDemo,
+      ]);
+    } catch (error) {
+      console.error("[DemoContext] fetchDemoById - error:", error);
+    }
+  };
+
   const updateDemo = async (demoId, updatedDemo) => {
     try {
       const numericDemoId = Number(demoId);
@@ -67,20 +88,23 @@ export const DemoProvider = ({ children }) => {
         return;
       }
 
-      // On reconstruit l'objet complet à envoyer,
-      // mais seuls title, description et image_url seront remplacés si fournis dans updatedDemo
-      const demoToSend = {
-        title: updatedDemo.title ?? existingDemo.title,
-        description: updatedDemo.description ?? existingDemo.description,
-        image_url: updatedDemo.image ?? existingDemo.image,
-        duration: existingDemo.duration,
-        section_id: existingDemo.sectionId,
-        audio_url: existingDemo.audio,
-      };
+      const formData = new FormData();
+      if (updatedDemo.title && updatedDemo.title !== existingDemo.title) {
+        formData.append("title", updatedDemo.title);
+      }
+      if (
+        updatedDemo.description &&
+        updatedDemo.description !== existingDemo.description
+      ) {
+        formData.append("description", updatedDemo.description);
+      }
+      if (updatedDemo.image instanceof File) {
+        formData.append("image", updatedDemo.image);
+      }
 
       const updatedDemoFromAPI = await DemoService.updateDemo(
         numericDemoId,
-        demoToSend
+        formData
       );
 
       const transformedDemo = {
@@ -155,8 +179,20 @@ export const DemoProvider = ({ children }) => {
     );
   };
 
-  const deleteDemo = (demoId) => {
-    setDemos(demos.filter((demo) => demo.id !== demoId));
+  const deleteDemo = async (demoId) => {
+    try {
+      const response = await DemoService.deleteDemo(demoId);
+      if (response.message === "Demo deleted successfully") {
+        setDemos((prevDemos) => prevDemos.filter((demo) => demo.id !== demoId));
+      } else {
+        console.error(
+          "[DemoContext] deleteDemo - failed to delete demo:",
+          response
+        );
+      }
+    } catch (error) {
+      console.error("[DemoContext] deleteDemo - error:", error);
+    }
   };
 
   const updateSection = async (sectionId, newName) => {

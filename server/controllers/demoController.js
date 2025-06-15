@@ -74,7 +74,7 @@ const demoController = {
         try {
             const deleted = await demoManager.delete(req.params.id);
             if (!deleted) {
-                return res.status(404).json({ message: "Demo not found" });
+            return res.status(404).json({ message: "Demo not found" });
             }
             res.json({ message: "Demo deleted successfully" });
         } catch (error) {

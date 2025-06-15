@@ -46,14 +46,15 @@ export const DemoService = {
     //     });
     //     return await response.json();
     // },
-    updateDemo: async (id, demo) => {
+    updateDemo: async (id, formData) => {
         const response = await fetch(`${API}/${id}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(demo),
+            body: formData,
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Erreur updateDemo : ${response.status} - ${errorText}`);
+        }
         return await response.json();
     },
     deleteDemo: async (id) => {

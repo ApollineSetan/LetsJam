@@ -80,11 +80,14 @@ const demoManager = {
     },
     async delete(id) {
         try {
-        await db.query("DELETE FROM demo WHERE id = ?", [id]);
-        return id;
+            const [result] = await db.query("DELETE FROM demo WHERE id = ?", [id]);
+            if (result.affectedRows === 0) {
+            return null; // aucun enregistrement supprimé
+            }
+            return id;
         } catch (error) {
-        console.error("Error deleting demo:", error);
-        throw error;
+            console.error("Error deleting demo:", error);
+            throw error;
         }
     },
 };

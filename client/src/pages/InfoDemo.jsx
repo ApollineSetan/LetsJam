@@ -17,7 +17,7 @@ function InfoDemo() {
   const [description, setDescription] = useState(demo?.description || "");
   const [image, setImage] = useState(demo?.image || "");
   const [imagePreview, setImagePreview] = useState(
-    demo?.image ? URL.createObjectURL(demo?.image) : ""
+    typeof demo?.image === "string" ? demo.image : ""
   );
 
   useEffect(() => {
@@ -25,8 +25,11 @@ function InfoDemo() {
       setTitle(demo.title);
       setDescription(demo.description);
       setImage(demo.image);
-      setImagePreview(null);
-      // setImagePreview(demo.image ? URL.createObjectURL(demo.image) : "");
+      setImagePreview(
+        demo.image instanceof File
+          ? URL.createObjectURL(demo.image)
+          : demo.image
+      );
     }
   }, [demo]); // Update state when demo changes
 
