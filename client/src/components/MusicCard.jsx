@@ -15,7 +15,7 @@ function MusicCard({ demo, deleteDemo }) {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   // The background image is set using the image prop passed to the component. If no image is provided, it defaults to null.
-  const backgroundImage = image ? `url(${URL.createObjectURL(image)})` : null;
+  const backgroundImage = image ? `url(${image})` : null;
   const style = backgroundImage
     ? {
         backgroundImage: backgroundImage,
@@ -24,6 +24,14 @@ function MusicCard({ demo, deleteDemo }) {
         backgroundRepeat: "no-repeat",
       }
     : {};
+
+  console.log("Duration reçue dans MusicCard:", duration);
+  function formatDuration(seconds) {
+    if (typeof seconds !== "number" || isNaN(seconds)) return "--:--";
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
+  }
 
   // Functions to handle the click event for playing the music, deleting the demo, and toggling the menu
   const handlePlayClick = () => {
@@ -78,7 +86,7 @@ function MusicCard({ demo, deleteDemo }) {
         </div>
         <div className="infoMusic">
           <p className="songName">{title}</p>
-          <span className="durationMusic">{duration}</span>
+          <span className="durationMusic">{formatDuration(duration)}</span>
         </div>
       </div>
 

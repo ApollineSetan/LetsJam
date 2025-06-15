@@ -19,6 +19,7 @@ function AddDemo() {
   const [audioButtonText, setAudioButtonText] = useState(
     "Ajouter un fichier audio"
   );
+  const [imageButtonText, setImageButtonText] = useState("Ajouter une image");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,17 +52,12 @@ function AddDemo() {
     // Create an audio element to get the duration of the audio file and check its length
     const audio = new Audio(URL.createObjectURL(file));
     audio.onloadedmetadata = () => {
-      const duration = audio.duration;
+      const duration = Math.floor(audio.duration);
+
       if (duration > 3600) {
         alert("La durée du fichier audio ne doit pas dépasser 1 heure.");
         return;
       }
-
-      const minutes = Math.floor(duration / 60);
-      const seconds = Math.floor(duration % 60);
-      const formattedDuration = `${minutes}:${
-        seconds < 10 ? "0" + seconds : seconds
-      }`;
 
       const demo = {
         title,
@@ -69,7 +65,7 @@ function AddDemo() {
         file,
         image,
         sectionId: sectionId || null,
-        duration: formattedDuration,
+        duration: duration,
       };
 
       // Call the addDemo function from the context to add the new demo
@@ -145,7 +141,7 @@ function AddDemo() {
         <div className="thirdContainer">
           <div className="addFile">
             <button type="button" onClick={handleAudioClick}>
-              {audioButtonText}
+              <span className="file-name">{audioButtonText}</span>
               <MdOutlineLink />
             </button>
             <input
@@ -159,7 +155,7 @@ function AddDemo() {
           </div>
           <div className="addImage">
             <button type="button" onClick={handleImageClick}>
-              Choisir une image
+              <span className="file-name">{imageButtonText}</span>
               <FaImages />
             </button>
             <input
@@ -167,7 +163,13 @@ function AddDemo() {
               id="imageFile"
               style={{ display: "none" }}
               accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => {
+                const selectedImage = e.target.files[0];
+                if (selectedImage) {
+                  setImage(selectedImage);
+                  setImageButtonText(selectedImage.name);
+                }
+              }}
             />
           </div>
           <div className="submit">

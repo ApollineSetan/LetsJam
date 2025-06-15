@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import SectionService from "../../services/sectionService";
+import DemoService from "../../services/demoService";
 
 const DemoContext = createContext();
 
@@ -34,12 +35,72 @@ export const DemoProvider = ({ children }) => {
     fetchSections();
   }, []);
 
-  const updateDemo = (demoId, updatedDemo) => {
-    setDemos(
-      demos.map((demo) =>
-        demo.id === demoId ? { ...demo, ...updatedDemo } : demo
-      )
-    );
+  useEffect(() => {
+    const fetchDemos = async () => {
+      try {
+        const data = await DemoService.getAllDemos();
+        console.log("Démos fetchées depuis l'API:", data);
+        const transformed = data.map((demo) => ({
+          id: demo._id,
+          title: demo._title,
+          description: demo._description,
+          image: demo._image_url, // On standardise les noms
+          duration: demo._duration,
+          sectionId: demo._section_id,
+          audio: demo._audio_url,
+        }));
+        setDemos(transformed);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des démos:", error);
+      }
+    };
+
+    fetchDemos();
+  }, []);
+
+  const updateDemo = async (demoId, updatedDemo) => {
+    try {
+      const numericDemoId = Number(demoId);
+      const existingDemo = demos.find((d) => d.id === numericDemoId);
+      if (!existingDemo) {
+        console.error("Demo non trouvée pour l'update:", demoId);
+        return;
+      }
+
+      // On reconstruit l'objet complet à envoyer,
+      // mais seuls title, description et image_url seront remplacés si fournis dans updatedDemo
+      const demoToSend = {
+        title: updatedDemo.title ?? existingDemo.title,
+        description: updatedDemo.description ?? existingDemo.description,
+        image_url: updatedDemo.image ?? existingDemo.image,
+        duration: existingDemo.duration,
+        section_id: existingDemo.sectionId,
+        audio_url: existingDemo.audio,
+      };
+
+      const updatedDemoFromAPI = await DemoService.updateDemo(
+        numericDemoId,
+        demoToSend
+      );
+
+      const transformedDemo = {
+        id: parseInt(updatedDemoFromAPI._id, 10),
+        title: updatedDemoFromAPI._title,
+        description: updatedDemoFromAPI._description,
+        image: updatedDemoFromAPI._image_url,
+        duration: updatedDemoFromAPI._duration,
+        sectionId: updatedDemoFromAPI._section_id,
+        audio: updatedDemoFromAPI._audio_url,
+      };
+
+      setDemos((prevDemos) =>
+        prevDemos.map((demo) =>
+          demo.id === numericDemoId ? transformedDemo : demo
+        )
+      );
+    } catch (error) {
+      console.error("[DemoContext] updateDemo - failed to update demo:", error);
+    }
   };
 
   const addSection = async (sectionName) => {

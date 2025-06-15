@@ -11,8 +11,8 @@ CREATE TABLE demo (
  id INT AUTO_INCREMENT PRIMARY KEY,
  title VARCHAR(50) NOT NULL,
  description TEXT NULL,
- image VARCHAR(255) NULL,
- duration TIME NOT NULL,
+ image_url TEXT NULL,
+ duration INT NOT NULL,
  createdAt DATETIME NOT NULL,
  section_id INT NULL,
  FOREIGN KEY (section_id) REFERENCES section(id) ON DELETE SET NULL

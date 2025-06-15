@@ -63,12 +63,12 @@ function EditionPage() {
       <TopBar />
       <div className="buttonsContainer">
         <div className="addDemoButton">
-          <Link to="/add-demo">Ajouter une nouvelle démo</Link>
-          <a href="#">
+          <Link to="/add-demo">
+            Ajouter une nouvelle démo
             <i>
               <MdOutlineLink />
             </i>
-          </a>
+          </Link>
         </div>
         <div className="addSectionDemo">
           <a href="#" onClick={handleToggleInput}>

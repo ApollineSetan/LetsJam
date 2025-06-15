@@ -4,7 +4,7 @@ import Demo from "../models/demo.js";
 const demoManager = {
     async getAll() {
         try {
-        const [rows] = await db.query("SELECT * FROM demos");
+        const [rows] = await db.query("SELECT * FROM demo");
         return rows.map(
             (row) =>
             new Demo(
@@ -26,7 +26,7 @@ const demoManager = {
     
     async getById(id) {
         try {
-        const [rows] = await db.query("SELECT * FROM demos WHERE id = ?", [id]);
+        const [rows] = await db.query("SELECT * FROM demo WHERE id = ?", [id]);
         return rows.length 
         ? new Demo(
             rows[0].id,
@@ -47,7 +47,7 @@ const demoManager = {
         try {
         const { title, description, image_url, duration, section_id, audio_url } = demo;
         const [result] = await db.query(
-            "INSERT INTO demos (title, description, image_url, duration, section_id, audio_url) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO demo (title, description, image_url, duration, section_id, audio_url) VALUES (?, ?, ?, ?, ?, ?)",
             [title, description, image_url, duration, section_id, audio_url]
         );
         return new Demo(
@@ -69,7 +69,7 @@ const demoManager = {
         try {
         const { title, description, image_url, duration, section_id, audio_url } = demo;
         await db.query(
-            "UPDATE demos SET title = ?, description = ?, image_url = ?, duration = ?, section_id = ?, audio_url = ? WHERE id = ?",
+            "UPDATE demo SET title = ?, description = ?, image_url = ?, duration = ?, section_id = ?, audio_url = ? WHERE id = ?",
             [title, description, image_url, duration, section_id, audio_url, id]
         );
         return new Demo(id, title, description, image_url, duration, new Date(), section_id, audio_url);
@@ -80,7 +80,7 @@ const demoManager = {
     },
     async delete(id) {
         try {
-        await db.query("DELETE FROM demos WHERE id = ?", [id]);
+        await db.query("DELETE FROM demo WHERE id = ?", [id]);
         return id;
         } catch (error) {
         console.error("Error deleting demo:", error);

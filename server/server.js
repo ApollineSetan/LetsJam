@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import demoRoutes from "./routes/DemoRoutes.js";
+import demoRoutes from "./routes/demoRoutes.js";
 import sectionRoutes from "./routes/sectionRoutes.js";
 
 const app = express();
@@ -9,6 +9,7 @@ app.use(express.json());
 
 app.use("/api/demos", demoRoutes);
 app.use("/api/sections", sectionRoutes);
+app.use("/uploads", express.static("public/uploads"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,196 +1,204 @@
 .mainContainer {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-top: 0px;
-  }
-  
-  .title {
-    font-size: 17px !important;
-    color: rgb(255, 255, 255, 0.7);
-    width: 100%;
-    margin-left: 20px;
-    padding: 60px 0 0 0;
-  }
-  
-  .form {
-    display: flex;
-    padding: 10px;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .firstContainer,
-  .secondContainer,
-  .thirdContainer {
-    width: 900px;
-  }
-  
-  .firstContainer {
-    display: flex;
-    gap: 50px;
-    margin-left: 15px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-  
-  .firstContainer .addTitle,
-  .firstContainer .addSection {
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgb(255, 255, 255, 0.7);
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    height: 40px;
-  }
-  
-  .firstContainer .addTitle:active,
-  .firstContainer .addSection:active {
-    border: 1px solid rgb(255, 255, 255);
-  }
-  
-  .secondContainer:active {
-    border: 1px solid rgb(255, 255, 255);
-  }
-  
-  .firstContainer .addTitle {
-    width: 400px;
-  }
-  
-  .firstContainer .addSection {
-    background-color: rgba(217, 217, 217, 0.4);
-    width: 300px;
-    cursor: pointer;
-  }
-  
-  .firstContainer .addSection:hover,
-  .firstContainer .addSection select {
-    background-color: rgba(217, 217, 217, 0.513);
-    width: 300px;
-    cursor: pointer;
-  }
-  
-  .firstContainer i {
-    font-size: 20px;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .firstContainer .addTitle input,
-  .firstContainer .addSection select {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 15px;
-  }
-  
-  .firstContainer .addTitle input::placeholder,
-  .secondContainer textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .secondContainer textarea {
-    margin-top: 4px;
-  }
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 0px;
+}
 
-  .firstContainer .addSection select:hover {
-    color: black;
-    background-color: transparent;
-  }
-  
-  .firstContainer .addTitle input:focus,
-  .secondContainer textarea:focus {
-    outline: none;
-  }
-  
-  .secondContainer {
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgb(255, 255, 255, 0.7);
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px 20px;
-    margin-left: 15px;
-    height: 250px;
-  }
-  
-  .secondContainer textarea {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-  }
-  
-  .thirdContainer {
-    display: flex;
-    gap: 50px;
-    margin-left: 15px;
-    padding-top: 40px;
-  }
-  
-  .addFile button,
-  .addImage button {
-    height: 40px;
-    width: 230px;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    text-align: center;
-    font-size: 15px;
-    cursor: pointer;
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgb(255, 255, 255, 0.7);
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .addFile button svg,
-  .addImage button svg {
-    margin-left: 10px;
-    font-size: 18px;
-  }
-  
-  .addFile button:hover,
-  .addImage button:hover {
-    background-color: rgba(254, 71, 110, 0.7);
-    color: rgb(255, 255, 255);
-  }
-  
-  .thirdContainer .submit button {
-    height: 40px;
-    width: 150px;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    text-align: center;
-    font-size: 15px;
-    cursor: pointer;
-    border-radius: 15px;
-    border: 1px solid rgb(255, 255, 255, 0.7);
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .thirdContainer .submit {
-    margin-left: auto;
-  }
-  
-  .thirdContainer .submit button:hover {
-    background-color: rgba(254, 71, 110, 0.7);
-    color: rgb(255, 255, 255);
-  }
+.title {
+  font-size: 17px !important;
+  color: rgb(255, 255, 255, 0.7);
+  width: 100%;
+  margin-left: 20px;
+  padding: 60px 0 0 0;
+}
+
+.form {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.firstContainer,
+.secondContainer,
+.thirdContainer {
+  width: 900px;
+}
+
+.firstContainer {
+  display: flex;
+  gap: 50px;
+  margin-left: 15px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.firstContainer .addTitle,
+.firstContainer .addSection {
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  height: 40px;
+}
+
+.firstContainer .addTitle:active,
+.firstContainer .addSection:active {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.secondContainer:active {
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.firstContainer .addTitle {
+  width: 400px;
+}
+
+.firstContainer .addSection {
+  background-color: rgba(217, 217, 217, 0.4);
+  width: 300px;
+  cursor: pointer;
+}
+
+.firstContainer .addSection:hover,
+.firstContainer .addSection select {
+  background-color: rgba(217, 217, 217, 0.513);
+  width: 300px;
+  cursor: pointer;
+}
+
+.firstContainer i {
+  font-size: 20px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.firstContainer .addTitle input,
+.firstContainer .addSection select {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 15px;
+}
+
+.firstContainer .addTitle input::placeholder,
+.secondContainer textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.secondContainer textarea {
+  margin-top: 4px;
+}
+
+.firstContainer .addSection select:hover {
+  color: black;
+  background-color: transparent;
+}
+
+.firstContainer .addTitle input:focus,
+.secondContainer textarea:focus {
+  outline: none;
+}
+
+.secondContainer {
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.7);
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 20px;
+  margin-left: 15px;
+  height: 250px;
+}
+
+.secondContainer textarea {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+
+.thirdContainer {
+  display: flex;
+  gap: 50px;
+  margin-left: 15px;
+  padding-top: 40px;
+}
+
+.addFile button,
+.addImage button {
+  height: 40px;
+  width: 230px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.file-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.addFile button svg,
+.addImage button svg {
+  margin-left: 10px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.addFile button:hover,
+.addImage button:hover {
+  background-color: rgba(254, 71, 110, 0.7);
+  color: rgb(255, 255, 255);
+}
+
+.thirdContainer .submit button {
+  height: 40px;
+  width: 150px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 1px solid rgb(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.thirdContainer .submit {
+  margin-left: auto;
+}
+
+.thirdContainer .submit button:hover {
+  background-color: rgba(254, 71, 110, 0.7);
+  color: rgb(255, 255, 255);
+}

@@ -9,7 +9,7 @@ import "../styles/InfoDemo.css";
 function InfoDemo() {
   const { demoId } = useParams();
   const { demos, updateDemo } = useDemoContext();
-  const demo = demos.find((demo) => demo.id === demoId);
+  const demo = demos.find((demo) => demo.id === parseInt(demoId));
   const navigate = useNavigate();
 
   // State variables to manage the demo's title, description, image, and image preview
@@ -25,7 +25,8 @@ function InfoDemo() {
       setTitle(demo.title);
       setDescription(demo.description);
       setImage(demo.image);
-      setImagePreview(demo.image ? URL.createObjectURL(demo.image) : "");
+      setImagePreview(null);
+      // setImagePreview(demo.image ? URL.createObjectURL(demo.image) : "");
     }
   }, [demo]); // Update state when demo changes
 
@@ -58,7 +59,11 @@ function InfoDemo() {
       {demo ? (
         <form onSubmit={handleSubmit} className="editForm">
           <div className="imageCard">
-            <img src={imagePreview} alt="Demo" className="demoImage" />
+            {imagePreview ? (
+              <img src={imagePreview} alt="Demo" className="demoImage" />
+            ) : (
+              <div className="noImagePlaceholder">Pas d'image disponible</div>
+            )}
             <label className="editIconLabel">
               <input
                 type="file"
