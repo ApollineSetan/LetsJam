@@ -87,14 +87,38 @@ function Section({ demos, sectionId }) {
             onBlur={handleNameSubmit}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleNameSubmit();
+              if (e.key === "Escape") {
+                setIsEditingName(false);
+                setNewSectionName(section.name);
+              }
             }}
             autoFocus
+            aria-label="Editer le nom de la section"
           />
         ) : (
-          <h1 onDoubleClick={handleNameEdit}>{section.name}</h1>
+          <h1
+            tabIndex={0}
+            onDoubleClick={handleNameEdit}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleNameEdit();
+              }
+            }}
+            role="button"
+            aria-label={`Modifier le nom de la section ${section.name}`}
+          >
+            {section.name}
+          </h1>
         )}
         {!isEditingName && (
-          <TbTrash className="deleteIcon" onClick={handleDeleteSection} />
+          <button
+            className="deleteIcon"
+            onClick={handleDeleteSection}
+            aria-label={`Supprimer la section ${section.name}`}
+          >
+            <TbTrash />
+          </button>
         )}
       </div>
 

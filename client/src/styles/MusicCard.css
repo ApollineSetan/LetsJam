@@ -54,6 +54,29 @@
   );
 }
 
+.iconButton {
+  all: unset;
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease-in-out;
+}
+
+.iconButton:hover,
+.iconButton:focus {
+  color: white;
+  outline: none;
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
 .iconsMusicCard {
   position: absolute;
   top: 10px;
@@ -69,8 +92,24 @@
 }
 
 .iconPlay {
+  all: unset;
+  cursor: pointer;
   margin-top: 15px;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconPlay:hover,
+.iconPlay:focus {
+  outline: none;
+  filter: brightness(1.2);
+}
+
+.iconPlay:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
 }
 
 .iconPlay img {

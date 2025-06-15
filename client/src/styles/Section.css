@@ -27,6 +27,7 @@
 }
 
 .deleteIcon {
+  all: unset;
   transform: translateY(2px);
   font-size: 18px;
   color: rgb(255, 255, 255, 0.7);
@@ -50,8 +51,10 @@
   color: white;
 }
 
-.deleteIcon:hover {
+.deleteIcon:hover,
+.deleteIcon:focus-visible {
   color: white;
+  outline: 2px solid white;
 }
 
 .musicCardGrid {

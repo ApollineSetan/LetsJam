@@ -105,24 +105,33 @@ function AddDemo() {
       <div className="title">
         <p>Ajouter une nouvelle démo audio</p>
       </div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="firstContainer">
           <div className="addTitle">
+            <label htmlFor="titleInput">Titre *</label>
             <input
               type="text"
               placeholder="Ajouter un titre..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              aria-required="true"
             />
           </div>
           <div className="addSection">
+            <label htmlFor="sectionSelect" className="sr-only">
+              Section
+            </label>
+            {/* Dropdown to select a section for the demo */}
             <select
+              id="sectionSelect"
               value={sectionId}
               onChange={(e) => setSectionId(e.target.value)}
             >
               {/* Displaying the sections in a dropdown menu for selection */}
-              <option value="">Ranger dans une section</option>
+              <option value="" disabled hidden>
+                Ranger dans une section
+              </option>
               {sections.map((section) => (
                 <option key={section.id} value={section.id}>
                   {section.name}
@@ -132,7 +141,12 @@ function AddDemo() {
           </div>
         </div>
         <div className="secondContainer">
+          <label htmlFor="descriptionInput" className="sr-only">
+            Description
+          </label>
+          {/* Textarea for adding a description to the demo */}
           <textarea
+            id="descriptionInput"
             placeholder="Ajouter une description..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -140,7 +154,15 @@ function AddDemo() {
         </div>
         <div className="thirdContainer">
           <div className="addFile">
-            <button type="button" onClick={handleAudioClick}>
+            <button
+              type="button"
+              onClick={handleAudioClick}
+              aria-label={
+                file
+                  ? `Changer le fichier audio, fichier actuel : ${file.name}`
+                  : "Ajouter un fichier audio"
+              }
+            >
               <span className="file-name">{audioButtonText}</span>
               <MdOutlineLink />
             </button>
@@ -151,10 +173,19 @@ function AddDemo() {
               accept="audio/*"
               onChange={handleAudioChange}
               required
+              aria-required="true"
             />
           </div>
           <div className="addImage">
-            <button type="button" onClick={handleImageClick}>
+            <button
+              type="button"
+              onClick={handleImageClick}
+              aria-label={
+                image
+                  ? `Changer l'image, image actuelle : ${image.name}`
+                  : "Ajouter une image"
+              }
+            >
               <span className="file-name">{imageButtonText}</span>
               <FaImages />
             </button>
