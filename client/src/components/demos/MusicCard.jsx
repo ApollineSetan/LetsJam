@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { DemoConfirmationOverlay } from "../Overlays/DemoConfirmationOverlay";
 import "../../styles/MusicCard.css";
@@ -19,12 +19,11 @@ function MusicCard({ demo, deleteDemo }) {
   const imageSrc = image || image_url || "";
   const audioSrc = demo.audio || demo.audio_url || demo.audioUrl || "";
   const audioRef = useRef(null);
-
+  const cardRef = useRef(null);
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   const backgroundImage = imageSrc ? `url(${imageSrc})` : null;
-
   const style = backgroundImage
     ? {
         backgroundImage: backgroundImage,
@@ -58,11 +57,42 @@ function MusicCard({ demo, deleteDemo }) {
     setMenuVisible(!isMenuVisible);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (cardRef.current && !cardRef.current.contains(event.target)) {
+        setMenuVisible(false);
+      }
+    }
+
+    function handleScroll() {
+      setMenuVisible(false);
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setMenuVisible(false);
+      }
+    }
+
+    if (isMenuVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMenuVisible]);
+
   return (
     <>
       <div
         className={`musicCardContainer ${isMenuVisible ? "menuActive" : ""}`}
         style={style}
+        ref={cardRef}
         role="group"
         aria-label={`Carte de la démo ${title}, durée ${formatDuration(
           duration
