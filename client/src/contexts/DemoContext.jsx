@@ -66,9 +66,6 @@ export const DemoProvider = ({ children }) => {
         title: demoFromAPI._title,
         description: demoFromAPI._description,
         image: demoFromAPI._image_url,
-        duration: demoFromAPI._duration,
-        sectionId: demoFromAPI._section_id,
-        audio: demoFromAPI._audio_url,
       };
       setDemos((prevDemos) => [
         ...prevDemos.filter((demo) => demo.id !== transformedDemo.id),
@@ -82,30 +79,52 @@ export const DemoProvider = ({ children }) => {
   const updateDemo = async (demoId, updatedDemo) => {
     try {
       const numericDemoId = Number(demoId);
-      const existingDemo = demos.find((d) => d.id === numericDemoId);
+      const existingDemo = demos.find((d) => Number(d.id) === numericDemoId);
       if (!existingDemo) {
         console.error("Demo non trouvée pour l'update:", demoId);
         return;
       }
 
       const formData = new FormData();
-      if (updatedDemo.title && updatedDemo.title !== existingDemo.title) {
+
+      if (updatedDemo.title !== undefined && updatedDemo.title !== null) {
         formData.append("title", updatedDemo.title);
       }
+
       if (
-        updatedDemo.description &&
-        updatedDemo.description !== existingDemo.description
+        updatedDemo.description !== undefined &&
+        updatedDemo.description !== null
       ) {
         formData.append("description", updatedDemo.description);
       }
+
       if (updatedDemo.image instanceof File) {
-        formData.append("image", updatedDemo.image);
+        formData.append("image_url", updatedDemo.image);
+      }
+
+      // Si duration, sectionId et audio sont importants pour ta mise à jour,
+      // ajoute-les aussi, sinon ne rien envoyer pour ne pas écraser
+
+      if (existingDemo.duration !== undefined) {
+        formData.append("duration", existingDemo.duration);
+      }
+      if (existingDemo.sectionId !== undefined) {
+        formData.append("section_id", existingDemo.sectionId);
+      }
+      if (existingDemo.audio !== undefined) {
+        formData.append("audio_url", existingDemo.audio);
+      }
+
+      // Debug: voir ce qu'on envoie
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
       }
 
       const updatedDemoFromAPI = await DemoService.updateDemo(
         numericDemoId,
         formData
       );
+      console.log("Réponse API mise à jour demo:", updatedDemoFromAPI);
 
       const transformedDemo = {
         id: parseInt(updatedDemoFromAPI._id, 10),
@@ -115,11 +134,12 @@ export const DemoProvider = ({ children }) => {
         duration: updatedDemoFromAPI._duration,
         sectionId: updatedDemoFromAPI._section_id,
         audio: updatedDemoFromAPI._audio_url,
+        createdAt: updatedDemoFromAPI._createdAt,
       };
 
       setDemos((prevDemos) =>
         prevDemos.map((demo) =>
-          demo.id === numericDemoId ? transformedDemo : demo
+          Number(demo.id) === numericDemoId ? transformedDemo : demo
         )
       );
     } catch (error) {
@@ -245,6 +265,7 @@ export const DemoProvider = ({ children }) => {
         addDemo,
         deleteDemo,
         updateDemo,
+        fetchDemoById,
         sections,
         addSection,
         deleteSection,

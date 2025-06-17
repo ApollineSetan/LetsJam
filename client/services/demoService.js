@@ -10,13 +10,23 @@ export const DemoService = {
         return await response.json();
     },
     createDemo: async (demo) => {
+        const formData = new FormData();
+        formData.append("title", demo.title);
+        formData.append("description", demo.description);
+        formData.append("duration", demo.duration);
+        formData.append("section_id", demo.section_id);
+        if (demo.image) {
+            formData.append("image", demo.image); // <-- fichier image
+        }
+        if (demo.audio_url) {
+            formData.append("audio_url", demo.audio_url);
+        }
+
         const response = await fetch(API, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(demo),
+            body: formData,
         });
+
         return await response.json();
     },
     // createDemo: async (demo) => {
