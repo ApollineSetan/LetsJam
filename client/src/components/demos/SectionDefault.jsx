@@ -1,8 +1,7 @@
-import React from "react";
-import "../styles/SectionDefault.css";
+import "../../styles/SectionDefault.css";
 import { MusicCard } from "./MusicCard";
 
-// This component renders a section for demos that do not belong to any specific section.
+// This component renders a section for demos that do not belong to any specific section
 function SectionDefault({ demos, deleteDemo }) {
   const demosWithoutSection = demos.filter((demo) => !demo.sectionId);
 

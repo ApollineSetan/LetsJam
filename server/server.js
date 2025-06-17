@@ -3,6 +3,7 @@ import cors from "cors";
 import demoRoutes from "./routes/demoRoutes.js";
 import sectionRoutes from "./routes/sectionRoutes.js";
 
+// Initialize the Express application
 const app = express();
 app.use(cors());
 app.use(express.json());

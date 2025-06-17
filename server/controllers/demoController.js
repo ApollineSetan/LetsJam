@@ -1,4 +1,3 @@
-import { parse } from "dotenv";
 import demoManager from "../managers/demoManager.js";
 
 const demoController = {
@@ -7,54 +6,77 @@ const demoController = {
             const demos = await demoManager.getAll();
             res.json(demos);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            const status = error.statusCode || 500;     // Use custom statusCode if provided, otherwise default to 500
+            res.status(status).json({ error: error.message });
         }
     },
 
     async getDemoById(req, res) {
         try {
-            const demo = await demoManager.getById(req.params.id);
+            const id = parseInt(req.params.id, 10);
+            if (isNaN(id)) {
+                return res.status(400).json({ message: "Invalid demo ID" });
+            }
+
+            const demo = await demoManager.getById(id);
             if (!demo) {
                 return res.status(404).json({ message: "Demo not found" });
             }
             res.json(demo);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            const status = error.statusCode || 500;
+            res.status(status).json({ error: error.message });
         }
     },
 
     async createDemo(req, res) {
-        try {
-            const { title, description } = req.body;
-            const duration = parseInt(req.body.duration, 10);
-            const section_id = req.body.section_id ? parseInt(req.body.section_id, 10) : null;
-            if (isNaN(section_id)) {
-                return res.status(400).json({ message: "Invalid section_id" });
-            }
+    try {
+      const { title, description, duration: durationRaw, section_id: sectionRaw } = req.body;
 
-            // Récupère les fichiers uploadés
-            const imageFile = req.files?.image_url?.[0];
-            const audioFile = req.files?.audio_url?.[0];
+      // Simple validation for required fields
+      if (!title || typeof title !== "string") {
+        return res.status(400).json({ message: "Title is required and must be a string." });
+      }
+      if (!description || typeof description !== "string") {
+        return res.status(400).json({ message: "Description is required and must be a string." });
+      }
 
-            // Rends image optionnelle : pas d'erreur si absente
-            const image_url = imageFile ? imageFile.location : null;
-            const audio_url = audioFile ? audioFile.location : null;
+      const duration = parseInt(durationRaw, 10);
+      if (isNaN(duration) || duration <= 0) {
+        return res.status(400).json({ message: "Duration must be a positive integer." });
+      }
 
-            const newDemo = {
-            title,
-            description,
-            image_url,
-            duration,
-            section_id,
-            audio_url,
-            };
-
-            const demo = await demoManager.create(newDemo);
-            res.status(201).json(demo);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+      let section_id = null;
+      if (sectionRaw !== undefined && sectionRaw !== null && sectionRaw !== "") {
+        section_id = parseInt(sectionRaw, 10);
+        if (isNaN(section_id) || section_id < 0) {
+          return res.status(400).json({ message: "Invalid section_id" });
         }
-    },
+      }
+
+      // Handle optional uploaded files (image/audio))
+      const imageFile = req.files?.image_url?.[0];
+      const audioFile = req.files?.audio_url?.[0];
+
+      const image_url = imageFile?.location || null;
+      const audio_url = audioFile?.location || null;
+
+      const newDemo = {
+        title,
+        description,
+        image_url,
+        duration,
+        section_id,
+        audio_url,
+      };
+
+      const demo = await demoManager.create(newDemo);
+      res.status(201).json(demo);
+    } catch (error) {
+      const status = error.statusCode || 500;
+      res.status(status).json({ error: error.message });
+    }
+  },
 
     async updateDemo(req, res) {
         try {

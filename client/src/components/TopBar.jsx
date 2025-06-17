@@ -1,10 +1,8 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/TopBar.css";
 import { BiSearchAlt, BiSolidBell } from "react-icons/bi";
 import { IoIosArrowBack } from "react-icons/io";
 
-// Renders a top bar with a return button, a search box, and a notification button
 function TopBar() {
   const navigate = useNavigate();
 

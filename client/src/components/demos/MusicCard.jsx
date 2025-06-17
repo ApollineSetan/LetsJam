@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { DemoConfirmationOverlay } from "./DemoConfirmationOverlay";
-import "../styles/MusicCard.css";
-import iconeplay from "../assets/iconeplay.png";
+import { DemoConfirmationOverlay } from "../Overlays/DemoConfirmationOverlay";
+import "../../styles/MusicCard.css";
+import iconeplay from "../../assets/iconeplay.png";
 import { TbTrash, TbDotsVertical } from "react-icons/tb";
 import { IoMdShare } from "react-icons/io";
 import { MdOutlineEdit } from "react-icons/md";
-import { use } from "react";
-import { useRef } from "react";
+
+function formatDuration(seconds) {
+  if (typeof seconds !== "number" || isNaN(seconds)) return "--:--";
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s < 10 ? "0" : ""}${s}`;
+}
 
 function MusicCard({ demo, deleteDemo }) {
   const { id, title, duration, image_url, image, audio } = demo;
-  const imageSrc = image || image_url;
-  const audioSrc = demo.audio || demo.audio_url || demo.audioUrl;
+  const imageSrc = image || image_url || "";
+  const audioSrc = demo.audio || demo.audio_url || demo.audioUrl || "";
   const audioRef = useRef(null);
-
-  console.log("imageSrc:", imageSrc);
 
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
@@ -30,13 +33,6 @@ function MusicCard({ demo, deleteDemo }) {
         backgroundRepeat: "no-repeat",
       }
     : {};
-
-  function formatDuration(seconds) {
-    if (typeof seconds !== "number" || isNaN(seconds)) return "--:--";
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
-  }
 
   const handlePlayClick = () => {
     if (audioRef.current) {

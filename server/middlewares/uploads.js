@@ -1,6 +1,6 @@
 import multer from 'multer';
 import multers3 from 'multer-s3';
-import s3Client from './s3Client.js';
+import s3Client from '../config/s3Client.js';
 
 const upload = multer({
   storage: multers3({
@@ -14,7 +14,7 @@ const upload = multer({
     },
   }),
   limits: {
-    fileSize: 100 * 1024 * 1024, // 100 MB
+    fileSize: 100 * 1024 * 1024,
   },
    fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('audio/')) {

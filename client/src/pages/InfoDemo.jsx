@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { TopBar } from "../components/TopBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDemoContext } from "../contexts/DemoContext";
 import { RiImageEditFill } from "react-icons/ri";
 import "../styles/InfoDemo.css";
 
-// This component allows users to see and edit an existing demo's title, description, and image.
 function InfoDemo() {
   const { demoId } = useParams();
   const { demos, updateDemo } = useDemoContext();
   const demo = demos.find((demo) => demo.id === parseInt(demoId));
   const navigate = useNavigate();
 
-  // State variables to manage the demo's title, description, image, and image preview
   const [title, setTitle] = useState(demo?.title || "");
   const [description, setDescription] = useState(demo?.description || "");
   const [image, setImage] = useState(demo?.image || "");
@@ -20,41 +18,61 @@ function InfoDemo() {
     typeof demo?.image === "string" ? demo.image : ""
   );
 
+  const imageUrlRef = useRef(null);
+
   useEffect(() => {
     if (demo) {
       setTitle(demo.title);
       setDescription(demo.description);
       setImage(demo.image);
-      setImagePreview(
-        demo.image instanceof File
-          ? URL.createObjectURL(demo.image)
-          : demo.image
-      );
+
+      if (demo.image instanceof File) {
+        if (imageUrlRef.current) {
+          URL.revokeObjectURL(imageUrlRef.current);
+        }
+        imageUrlRef.current = URL.createObjectURL(demo.image);
+        setImagePreview(imageUrlRef.current);
+      } else {
+        setImagePreview(demo.image);
+      }
     }
-  }, [demo]); // Update state when demo changes
+    return () => {
+      if (imageUrlRef.current) {
+        URL.revokeObjectURL(imageUrlRef.current);
+        imageUrlRef.current = null;
+      }
+    };
+  }, [demo]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-    setImagePreview(URL.createObjectURL(file));
+
+    if (imageUrlRef.current) {
+      URL.revokeObjectURL(imageUrlRef.current);
+    }
+    imageUrlRef.current = URL.createObjectURL(file);
+    setImagePreview(imageUrlRef.current);
   };
 
-  // Function to handle form submission and update the demo, then navigate to the home page
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!title.trim()) {
+      alert("Le titre est obligatoire");
+      return;
+    }
     const updatedDemo = {
       title,
       description,
       image,
-      duration: demo?.duration || 0, // Assuming duration is not editable here
-      sectionId: demo?.sectionId || null, // Assuming sectionId is not editable here
-      audio: demo?.audio || null, // Assuming audio is not editable here
+      duration: demo?.duration || 0,
+      sectionId: demo?.sectionId || null,
+      audio: demo?.audio || null,
     };
     updateDemo(demoId, updatedDemo);
     navigate("/");
   };
 
-  // Function to handle the click event for playing the music
   return (
     <div className="mainContainer">
       <TopBar />

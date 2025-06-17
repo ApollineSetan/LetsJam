@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/EditionPage.css";
 import { TopBar } from "../components/TopBar";
-import { SectionDefault } from "../components/SectionDefault";
-import { Section } from "../components/Section";
+import { SectionDefault } from "../components/demos/SectionDefault";
+import { Section } from "../components/demos/Section";
 import { Link } from "react-router-dom";
 import { MdOutlineLink } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
 import { useDemoContext } from "../contexts/DemoContext";
 
-// This component represents the main page for managing demos and sections.
-// It allows users to add new demos, create sections, and view existing demos in their respective sections.
 function EditionPage() {
   const { demos, deleteDemo, addSection, sections } = useDemoContext();
   const [newSectionName, setNewSectionName] = useState("");
@@ -34,7 +32,6 @@ function EditionPage() {
     }
   };
 
-  // This effect handles the click outside of the input field to close it when clicked outside.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
@@ -50,10 +47,6 @@ function EditionPage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showInput]);
-
-  useEffect(() => {
-    console.log("Démo(s) ajoutée(s):", demos);
-  }, [demos]);
 
   const isAnyDemoPresent =
     demos.length > 0 || sections.some((section) => section.demos?.length > 0);
@@ -80,7 +73,6 @@ function EditionPage() {
         </div>
       </div>
 
-      {/* Input field for adding a new section, shown when the button is clicked */}
       {showInput && (
         <div className="inputContainer" ref={inputRef}>
           <input
@@ -102,7 +94,6 @@ function EditionPage() {
 
         <SectionDefault demos={demos} deleteDemo={deleteDemo} />
 
-        {/* Mapping through the sections to display each section with its respective demos */}
         {sections.map((section) => (
           <Section key={section.id} demos={demos} sectionId={section.id} />
         ))}

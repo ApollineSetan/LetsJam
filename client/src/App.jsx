@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import React from "react";
 import { DemoProvider } from "./contexts/DemoContext";
 import "./App.css";
 import { LeftMenu } from "./components/LeftMenu";
@@ -9,7 +6,6 @@ import { AddDemo } from "./pages/AddDemo";
 import { InfoDemo } from "./pages/InfoDemo";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-// This is the main App component that sets up the routing and context for the application.
 function App() {
   return (
     <DemoProvider>

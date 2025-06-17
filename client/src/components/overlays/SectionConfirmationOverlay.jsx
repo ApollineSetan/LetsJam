@@ -1,15 +1,15 @@
-import React from "react";
-import "../styles/ConfirmationOverlay.css";
+import "../../styles/ConfirmationOverlay.css";
 
-// This component is used to display a confirmation overlay when the user tries to delete a demo.
-function DemoConfirmationOverlay({ onCancel, onConfirm, demoTitle }) {
+// This component is used to display a confirmation overlay when a user attempts to delete a section
+function SectionConfirmationOverlay({ onCancel, onConfirm, sectionTitle }) {
   return (
     <div className="overlay">
       <div className="confirmationBox">
         <h3>Êtes-vous sûr de vouloir supprimer ?</h3>
         <p>
           Cette action est irréversible et entraînera la suppression définitive
-          de "<strong>{demoTitle}</strong>".
+          de "<strong>{sectionTitle}</strong>". Les démos ne seront pas
+          impactées et seront déplacées dans la section par défault.
         </p>
         <div className="buttons">
           <button onClick={onCancel} className="cancelButton">
@@ -24,4 +24,4 @@ function DemoConfirmationOverlay({ onCancel, onConfirm, demoTitle }) {
   );
 }
 
-export { DemoConfirmationOverlay };
+export { SectionConfirmationOverlay };

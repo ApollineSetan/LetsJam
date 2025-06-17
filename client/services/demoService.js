@@ -1,13 +1,21 @@
 const API = "http://localhost:5000/api/demos";
 
+const handleResponse = async (response) => {
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Erreur API : ${response.status} - ${errorText}`);
+    }
+    return await response.json();
+};
+
 export const DemoService = {
     getAllDemos: async () => {
         const response = await fetch(API);
-        return await response.json();
+        return await handleResponse(response);
     },
     getDemoById: async (id) => {
         const response = await fetch(`${API}/${id}`);
-        return await response.json();
+        return await handleResponse(response);
     },
     createDemo: async (demo) => {
         const formData = new FormData();
@@ -28,11 +36,7 @@ export const DemoService = {
             method: "POST",
             body: formData,
         });
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Erreur createDemo : ${response.status} - ${errorText}`);
-        }
-        return await response.json();
+        return await handleResponse(response);
     },
     
     updateDemo: async (id, formData) => {
@@ -40,17 +44,14 @@ export const DemoService = {
             method: "PUT",
             body: formData,
         });
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Erreur updateDemo : ${response.status} - ${errorText}`);
-        }
-        return await response.json();
+        return await handleResponse(response);
     },
+
     deleteDemo: async (id) => {
         const response = await fetch(`${API}/${id}`, {
             method: "DELETE",
         });
-        return await response.json();
+        return await handleResponse(response);
     },
 };
 

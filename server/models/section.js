@@ -1,5 +1,3 @@
-import db from "../config/dbConfig.js";
-
 // Constructor
 class Section {
   constructor(id, name) {
@@ -7,7 +5,7 @@ class Section {
     this.name = name;
   }
 
-  // Getters and Setters
+// Getters and Setters
   get id() {
     return this._id;
   }

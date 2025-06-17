@@ -1,28 +1,60 @@
-import React, { useState, useEffect } from "react";
-import "../styles/LeftMenu.css";
-import logoImage from "../assets/logoImage.png";
-import { Menu } from "./Menu";
-import { MenuList } from "./MenuList";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { HiHome, HiUserGroup } from "react-icons/hi";
+import { TbUserFilled, TbLogout2 } from "react-icons/tb";
+import { BiSolidMessageSquareDetail, BiNetworkChart } from "react-icons/bi";
+import { IoBookmarks } from "react-icons/io5";
+import { IoMdSettings } from "react-icons/io";
+import { FaFile } from "react-icons/fa6";
+import logoImage from "../assets/logoImage.png";
+import "../styles/LeftMenu.css";
 
 function LeftMenu() {
-
-  // State to manage the active index of the menu items
   const [activeIndex, setActiveIndex] = useState(null);
   const location = useLocation();
 
-  // Effect to set the active index based on the current path
+  const MenuList = [
+    { id: 1, icon: <HiHome />, name: "Accueil" },
+    { id: 2, icon: <TbUserFilled />, name: "Profil" },
+    { id: 3, icon: <BiSolidMessageSquareDetail />, name: "Messagerie" },
+    { id: 4, icon: <BiNetworkChart />, name: "Réseau" },
+    { id: 5, icon: <HiUserGroup />, name: "Groupes" },
+    { id: 6, icon: <IoBookmarks />, name: "Enregistrements" },
+    { id: 7, icon: <IoMdSettings />, name: "Paramètres" },
+    { id: 8, icon: <FaFile />, name: "Conditions générales" },
+    { id: 9, icon: <TbLogout2 />, name: "Se déconnecter" },
+  ];
+
   useEffect(() => {
-    if (location.pathname === "/add-demo") {
-      setActiveIndex(2);
-    } else if (location.pathname === "/") {
-      setActiveIndex(2);
-    } else if (location.pathname.startsWith("/edit-demo")) {
+    if (
+      location.pathname === "/add-demo" ||
+      location.pathname === "/" ||
+      location.pathname.startsWith("/edit-demo")
+    ) {
       setActiveIndex(2);
     } else {
       setActiveIndex(null);
     }
   }, [location]);
+
+  const renderMenu = (menuItems, className) => (
+    <div className={`MenuContainer ${className}`}>
+      <ul>
+        {menuItems.map((menu) => (
+          <li
+            key={menu.id}
+            className={menu.id === activeIndex ? "active" : ""}
+            onClick={() => setActiveIndex(menu.id)}
+          >
+            <a href="#">
+              <i>{menu.icon}</i>
+              <span>{menu.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 
   return (
     <div className="leftMenu">
@@ -31,20 +63,8 @@ function LeftMenu() {
           <img src={logoImage} alt="Logo" className="logoImage" />
         </i>
       </div>
-      {/* Menu component to display the menu items */}
-      <Menu
-        menuObject={MenuList.slice(0, 6)}
-        className="primaryMenu"
-        activeIndex={activeIndex}
-        onMenuClick={setActiveIndex}
-      />
-
-      <Menu
-        menuObject={MenuList.slice(6, 9)}
-        className="secondaryMenu"
-        activeIndex={activeIndex}
-        onMenuClick={setActiveIndex}
-      />
+      {renderMenu(MenuList.slice(0, 6), "primaryMenu")}
+      {renderMenu(MenuList.slice(6, 9), "secondaryMenu")}
     </div>
   );
 }
