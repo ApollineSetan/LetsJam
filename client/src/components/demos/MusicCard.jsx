@@ -61,7 +61,7 @@ function MusicCard({ demo, deleteDemo }) {
   return (
     <>
       <div
-        className="musicCardContainer"
+        className={`musicCardContainer ${isMenuVisible ? "menuActive" : ""}`}
         style={style}
         role="group"
         aria-label={`Carte de la démo ${title}, durée ${formatDuration(

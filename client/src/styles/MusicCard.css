@@ -6,6 +6,7 @@
   margin-left: 20px;
   padding: 20px;
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,6 +45,7 @@
   );
   box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
+  z-index: 5;
 }
 
 .musicCardContainer:hover::before {
@@ -52,6 +54,10 @@
     rgba(223, 108, 175, 0.4) 0%,
     rgba(126, 95, 197, 0.4) 100%
   );
+}
+
+.musicCardContainer.menuActive {
+  z-index: 999;
 }
 
 .iconButton {
@@ -150,7 +156,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   width: 150px;
-  z-index: 1000;
+  z-index: 10;
   padding: 10px 0;
 }
 
