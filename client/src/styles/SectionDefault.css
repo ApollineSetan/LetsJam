@@ -22,7 +22,7 @@
   color: rgb(255, 255, 255, 0.7);
 }
 
-.musicCardGrid {
+.musicCardDefaultGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
