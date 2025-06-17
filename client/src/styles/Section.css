@@ -83,67 +83,6 @@
 
 .editable-text,
 .editable-input {
-  width: 100%; /* prennent toute la largeur dispo */
-  box-sizing: border-box;
-}
-
-/* .sectionCustom {
-  background-color: yellow;
-  padding: 10px;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   box-sizing: border-box;
-  height: auto;
 }
-
-.sectionContainer {
-  background-color: red;
-}
-
-.sectionHeader {
-  display: flex;
-  align-items: baseline;
-}
-
-.sectionContainer h1 {
-  font-size: 17px;
-  color: rgb(255, 255, 255, 0.7);
-  padding-left: 20px;
-  padding-top: 30px;
-  margin-bottom: 20px;
-  margin-right: 10px;
-  line-height: 1.5;
-}
-
-.sectionContainer input {
-  font-size: 17px;
-  color: rgb(255, 255, 255, 0.7);
-  background-color: transparent;
-  border: none;
-  outline: none;
-  width: auto;
-  padding-left: 20px;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  line-height: 1.5;
-}
-
-.sectionContainer input:focus {
-  background-color: transparent;
-  margin-right: 135px;
-  color: white;
-}
-
-.deleteIcon {
-  transform: translateY(2px);
-  font-size: 18px;
-  color: rgb(255, 255, 255, 0.7);
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-
-.deleteIcon:hover {
-  color: white;
-} */

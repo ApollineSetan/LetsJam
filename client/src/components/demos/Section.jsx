@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo, use } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import "../../styles/Section.css";
 import { MusicCard } from "./MusicCard";
 import { useDemoContext } from "../../contexts/DemoContext";
