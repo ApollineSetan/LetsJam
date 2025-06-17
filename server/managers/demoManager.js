@@ -44,12 +44,24 @@ const demoManager = {
         }
     },
     async create(demo) {
-        try {
+    try {
         const { title, description, image_url, duration, section_id, audio_url } = demo;
+
+        // 🔍 Log ici pour vérifier les données reçues
+        console.log("Création d'un demo avec les données suivantes :", {
+            title,
+            description,
+            image_url,
+            duration,
+            section_id,
+            audio_url,
+        });
+
         const [result] = await db.query(
             "INSERT INTO demo (title, description, image_url, duration, section_id, audio_url) VALUES (?, ?, ?, ?, ?, ?)",
             [title, description, image_url, duration, section_id, audio_url]
         );
+
         return new Demo(
             result.insertId,
             title,
@@ -60,11 +72,11 @@ const demoManager = {
             section_id,
             audio_url
         );
-        } catch (error) {
+    } catch (error) {
         console.error("Error creating demo:", error);
         throw error;
-        }
-    },
+    }
+},
     async update(id, demo) {
         try {
         const { title, description, image_url, duration, section_id, audio_url } = demo;

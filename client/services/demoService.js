@@ -14,19 +14,24 @@ export const DemoService = {
         formData.append("title", demo.title);
         formData.append("description", demo.description);
         formData.append("duration", demo.duration);
-        formData.append("section_id", demo.section_id);
+        if (demo.sectionId !== undefined && demo.sectionId !== null && !isNaN(demo.sectionId)) {
+            formData.append("section_id", demo.sectionId.toString());
+        }
         if (demo.image) {
             formData.append("image_url", demo.image);
         }
-        if (demo.audio_url) {
-            formData.append("audio_url", demo.audio_url);
+        if (demo.file) {
+            formData.append("audio_url", demo.file);
         }
 
         const response = await fetch(API, {
             method: "POST",
             body: formData,
         });
-
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Erreur createDemo : ${response.status} - ${errorText}`);
+        }
         return await response.json();
     },
     

@@ -6,13 +6,22 @@ import iconeplay from "../assets/iconeplay.png";
 import { TbTrash, TbDotsVertical } from "react-icons/tb";
 import { IoMdShare } from "react-icons/io";
 import { MdOutlineEdit } from "react-icons/md";
+import { use } from "react";
+import { useRef } from "react";
 
 function MusicCard({ demo, deleteDemo }) {
-  const { id, title, duration, image } = demo;
+  const { id, title, duration, image_url, image, audio } = demo;
+  const imageSrc = image || image_url;
+  const audioSrc = demo.audio || demo.audio_url || demo.audioUrl;
+  const audioRef = useRef(null);
+
+  console.log("imageSrc:", imageSrc);
+
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isMenuVisible, setMenuVisible] = useState(false);
 
-  const backgroundImage = image ? `url(${image})` : null;
+  const backgroundImage = imageSrc ? `url(${imageSrc})` : null;
+
   const style = backgroundImage
     ? {
         backgroundImage: backgroundImage,
@@ -30,7 +39,10 @@ function MusicCard({ demo, deleteDemo }) {
   }
 
   const handlePlayClick = () => {
-    console.log("Lecture de la musique : ", title);
+    if (audioRef.current) {
+      audioRef.current.play();
+      console.log("Lecture de la musique : ", title);
+    }
   };
 
   const handleDeleteClick = () => {
@@ -42,7 +54,7 @@ function MusicCard({ demo, deleteDemo }) {
   };
 
   const handleConfirmDelete = () => {
-    deleteDemo(demo.id);
+    deleteDemo(id);
     setOverlayVisible(false);
   };
 
@@ -121,6 +133,13 @@ function MusicCard({ demo, deleteDemo }) {
           <span className="durationMusic">{formatDuration(duration)}</span>
         </div>
       </div>
+
+      <audio
+        ref={audioRef}
+        src={audioSrc}
+        preload="none"
+        style={{ display: "none" }}
+      />
 
       {isOverlayVisible && (
         <DemoConfirmationOverlay

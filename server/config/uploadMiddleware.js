@@ -6,7 +6,6 @@ const upload = multer({
   storage: multers3({
     s3: s3Client,
     bucket: process.env.AWS_BUCKET_NAME,
-    acl: 'public-read',
     metadata: (req, file, cb) => {
       cb(null, { fieldName: file.fieldname });
     },
@@ -18,10 +17,10 @@ const upload = multer({
     fileSize: 100 * 1024 * 1024, // 100 MB
   },
    fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
+    if (file.mimetype.startsWith('image/') || file.mimetype.startsWith('audio/')) {
       cb(null, true);
     } else {
-      cb(new Error('Only image files are allowed!'), false);
+      cb(new Error('Only image and audio files are allowed!'), false);
     }
   },
 });

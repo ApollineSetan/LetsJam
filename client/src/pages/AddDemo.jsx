@@ -6,14 +6,25 @@ import { useNavigate } from "react-router-dom";
 import { FaImages } from "react-icons/fa";
 import { useDemoContext } from "../contexts/DemoContext";
 
-// This component allows users to add a new demo audio file along with its title, description, section, and optional image.
+function getAudioDuration(file) {
+  return new Promise((resolve, reject) => {
+    const audio = new Audio(URL.createObjectURL(file));
+    audio.oncanplaythrough = () => {
+      resolve(Math.floor(audio.duration));
+    };
+    audio.onerror = () => {
+      reject("Impossible de récupérer la durée de l'audio");
+    };
+  });
+}
+
 function AddDemo() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
   const [sectionId, setSectionId] = useState("");
-  const { addDemo, sections } = useDemoContext();
+  const { createDemo, sections } = useDemoContext();
   const navigate = useNavigate();
 
   const [audioButtonText, setAudioButtonText] = useState(
@@ -21,7 +32,7 @@ function AddDemo() {
   );
   const [imageButtonText, setImageButtonText] = useState("Ajouter une image");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!title || !file) {
@@ -29,7 +40,6 @@ function AddDemo() {
       return;
     }
 
-    // Check if the file is an audio file and its duration is less than 1 hour
     const validExtensions = [
       "mp3",
       "flac",
@@ -49,10 +59,8 @@ function AddDemo() {
       return;
     }
 
-    // Create an audio element to get the duration of the audio file and check its length
-    const audio = new Audio(URL.createObjectURL(file));
-    audio.onloadedmetadata = () => {
-      const duration = Math.floor(audio.duration);
+    try {
+      const duration = await getAudioDuration(file);
 
       if (duration > 3600) {
         alert("La durée du fichier audio ne doit pas dépasser 1 heure.");
@@ -65,20 +73,22 @@ function AddDemo() {
         file,
         image,
         sectionId: sectionId || null,
-        duration: duration,
+        duration,
       };
 
-      // Call the addDemo function from the context to add the new demo
-      addDemo(demo, sectionId);
+      await createDemo(demo);
+
       setTitle("");
       setDescription("");
       setFile(null);
       setImage(null);
       setAudioButtonText("Ajouter un fichier audio");
+      setImageButtonText("Ajouter une image");
 
-      // Redirect to the home page after adding the demo
       navigate("/");
-    };
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleAudioClick = () => {
@@ -97,8 +107,6 @@ function AddDemo() {
     document.getElementById("imageFile").click();
   };
 
-  // Form submission handler to add a new demo audio file
-  // and redirect to the home page after successful addition
   return (
     <div className="mainContainer">
       <TopBar />
@@ -110,6 +118,7 @@ function AddDemo() {
           <div className="addTitle">
             <label htmlFor="titleInput">Titre *</label>
             <input
+              id="titleInput"
               type="text"
               placeholder="Ajouter un titre..."
               value={title}
@@ -122,13 +131,11 @@ function AddDemo() {
             <label htmlFor="sectionSelect" className="sr-only">
               Section
             </label>
-            {/* Dropdown to select a section for the demo */}
             <select
               id="sectionSelect"
               value={sectionId}
               onChange={(e) => setSectionId(e.target.value)}
             >
-              {/* Displaying the sections in a dropdown menu for selection */}
               <option value="" disabled hidden>
                 Ranger dans une section
               </option>
@@ -144,7 +151,6 @@ function AddDemo() {
           <label htmlFor="descriptionInput" className="sr-only">
             Description
           </label>
-          {/* Textarea for adding a description to the demo */}
           <textarea
             id="descriptionInput"
             placeholder="Ajouter une description..."

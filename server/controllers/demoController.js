@@ -1,3 +1,4 @@
+import { parse } from "dotenv";
 import demoManager from "../managers/demoManager.js";
 
 const demoController = {
@@ -24,14 +25,20 @@ const demoController = {
 
     async createDemo(req, res) {
         try {
-            const { title, description, duration, section_id } = req.body;
-
-            if (!req.file || !req.file.location) {
-            return res.status(400).json({ error: "Image file is required." });
+            const { title, description } = req.body;
+            const duration = parseInt(req.body.duration, 10);
+            const section_id = req.body.section_id ? parseInt(req.body.section_id, 10) : null;
+            if (isNaN(section_id)) {
+                return res.status(400).json({ message: "Invalid section_id" });
             }
 
-            const image_url = req.file.location;
-            const audio_url = req.body.audio_url || null;
+            // Récupère les fichiers uploadés
+            const imageFile = req.files?.image_url?.[0];
+            const audioFile = req.files?.audio_url?.[0];
+
+            // Rends image optionnelle : pas d'erreur si absente
+            const image_url = imageFile ? imageFile.location : null;
+            const audio_url = audioFile ? audioFile.location : null;
 
             const newDemo = {
             title,

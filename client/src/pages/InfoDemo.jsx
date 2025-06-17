@@ -46,6 +46,9 @@ function InfoDemo() {
       title,
       description,
       image,
+      duration: demo?.duration || 0, // Assuming duration is not editable here
+      sectionId: demo?.sectionId || null, // Assuming sectionId is not editable here
+      audio: demo?.audio || null, // Assuming audio is not editable here
     };
     updateDemo(demoId, updatedDemo);
     navigate("/");

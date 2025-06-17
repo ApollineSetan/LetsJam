@@ -76,6 +76,24 @@ export const DemoProvider = ({ children }) => {
     }
   };
 
+  const createDemo = async (demo) => {
+    try {
+      const demoFromAPI = await DemoService.createDemo(demo);
+      const transformedDemo = {
+        id: demoFromAPI._id,
+        title: demoFromAPI._title,
+        description: demoFromAPI._description,
+        image: demoFromAPI._image_url,
+        duration: demoFromAPI._duration,
+        sectionId: demoFromAPI._section_id,
+        audio: demoFromAPI._audio_url,
+      };
+      setDemos((prev) => [...prev, transformedDemo]);
+    } catch (error) {
+      console.error("Erreur lors de la création de la démo:", error);
+    }
+  };
+
   const updateDemo = async (demoId, updatedDemo) => {
     try {
       const numericDemoId = Number(demoId);
@@ -99,6 +117,8 @@ export const DemoProvider = ({ children }) => {
       }
 
       if (updatedDemo.image instanceof File) {
+        formData.append("image_url", updatedDemo.image);
+      } else if (typeof updatedDemo.image === "string") {
         formData.append("image_url", updatedDemo.image);
       }
 
@@ -263,6 +283,7 @@ export const DemoProvider = ({ children }) => {
       value={{
         demos,
         addDemo,
+        createDemo,
         deleteDemo,
         updateDemo,
         fetchDemoById,
