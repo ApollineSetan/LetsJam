@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, use } from "react";
 import "../../styles/Section.css";
 import { MusicCard } from "./MusicCard";
 import { useDemoContext } from "../../contexts/DemoContext";
@@ -6,7 +6,7 @@ import { TbTrash } from "react-icons/tb";
 import { SectionConfirmationOverlay } from "../Overlays/SectionConfirmationOverlay";
 
 // Inline editing and accessibility component
-function EditableText({ text, onSubmit, ariaLabel }) {
+function EditableText({ text, onSubmit, ariaLabel, onEditingChange }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(text);
   const inputRef = useRef(null);
@@ -14,6 +14,12 @@ function EditableText({ text, onSubmit, ariaLabel }) {
   useEffect(() => {
     setValue(text);
   }, [text]);
+
+  useEffect(() => {
+    if (onEditingChange) {
+      onEditingChange(isEditing);
+    }
+  }, [isEditing, onEditingChange]);
 
   useEffect(() => {
     if (!isEditing) return;
@@ -94,6 +100,7 @@ function Section({ demos, sectionId }) {
   } = useDemoContext();
 
   const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   // Memoize the section to avoid unnecessary re-renders
   const section = useMemo(
@@ -125,12 +132,15 @@ function Section({ demos, sectionId }) {
 
   return (
     <div className="sectionContainer">
-      <div className="sectionHeader">
-        <EditableText
-          text={section.name}
-          onSubmit={handleNameSubmit}
-          ariaLabel={`Modifier le nom de la section ${section.name}`}
-        />
+      <div className={`sectionHeader ${isEditing ? "editing" : ""}`}>
+        <div className="editableTextWrapper">
+          <EditableText
+            text={section.name}
+            onSubmit={handleNameSubmit}
+            ariaLabel={`Modifier le nom de la section ${section.name}`}
+            onEditingChange={setIsEditing}
+          />
+        </div>
 
         <button
           className="deleteIcon"

@@ -14,7 +14,13 @@
   padding: 10px 15px 15px 0;
   display: flex;
   align-items: center;
+  gap: 10px;
   margin-left: 20px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.sectionHeader.editing {
+  border-color: rgb(255, 255, 255, 0.7);
 }
 
 .sectionHeader h1 {
@@ -64,6 +70,17 @@
   width: 100%;
   justify-items: center;
   margin-top: 20px;
+}
+
+.editableTextWrapper {
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.editable-text,
+.editable-input {
+  width: 100%; /* prennent toute la largeur dispo */
+  box-sizing: border-box;
 }
 
 /* .sectionCustom {
