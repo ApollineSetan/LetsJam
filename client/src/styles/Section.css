@@ -17,6 +17,7 @@
   gap: 10px;
   margin-left: 20px;
   transition: border-color 0.3s ease-in-out;
+  width: 100%;
 }
 
 .sectionHeader.editing {
@@ -53,14 +54,17 @@
 
 .sectionContainer input:focus {
   background-color: transparent;
-  /* margin-right: 143px; */
   color: white;
 }
 
-.deleteIcon:hover,
-.deleteIcon:focus-visible {
+.deleteIcon:hover {
   color: white;
+}
+
+.deleteIcon:focus-visible {
   outline: 2px solid white;
+  outline-offset: 2px;
+  color: white;
 }
 
 .musicCardGrid {

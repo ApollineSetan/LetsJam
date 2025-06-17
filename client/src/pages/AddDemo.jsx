@@ -116,7 +116,6 @@ function AddDemo() {
       <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="firstContainer">
           <div className="addTitle">
-            <label htmlFor="titleInput">Titre *</label>
             <input
               id="titleInput"
               type="text"
