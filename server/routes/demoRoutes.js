@@ -9,7 +9,7 @@ const upload = multer();
 router.get("/", DemoController.getAllDemos);
 router.get("/:id", DemoController.getDemoById);
 router.post("/", DemoController.createDemo);
-router.post("/", upload.single("image"), DemoController.createDemo);
+router.post("/", upload.single("image_url"), DemoController.createDemo);
 router.put("/:id", upload.single('image_url'), DemoController.updateDemo);
 router.delete("/:id", DemoController.deleteDemo);
 
