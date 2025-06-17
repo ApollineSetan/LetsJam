@@ -1,10 +1,8 @@
 import express from "express";
 import DemoController from "../controllers/demoController.js";
-import multer from "multer";
 import upload from "../config/uploadMiddleware.js";
 
 const router = express.Router();
-const upload = multer();
 
 router.get("/", DemoController.getAllDemos);
 router.get("/:id", DemoController.getDemoById);
