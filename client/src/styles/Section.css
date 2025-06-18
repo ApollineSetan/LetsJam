@@ -1,23 +1,26 @@
 .sectionContainer {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  padding: 0 20px 20px 20px;
+  margin: 0 auto;
+  max-width: 100%;
   width: 100%;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   box-sizing: border-box;
 }
 
 .sectionHeader {
-  background-color: rgba(66, 66, 117, 0.219);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 10px 15px 15px 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 75vw;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 20px;
+  padding: 10px 15px 15px 15px;
+  margin-top: 30px;
+  background-color: rgba(66, 66, 117, 0.219);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
   transition: border-color 0.3s ease-in-out;
-  width: 100%;
 }
 
 .sectionHeader.editing {
@@ -69,10 +72,9 @@
 
 .musicCardGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* responsive */
   gap: 30px;
   width: 100%;
-  justify-items: center;
   margin-top: 20px;
 }
 
@@ -85,4 +87,43 @@
 .editable-input {
   width: 100%;
   box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .sectionContainer {
+    padding: 0 15px 20px;
+  }
+
+  .musicCardGrid {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionHeader {
+    width: 100%;
+    left: 0;
+    transform: none;
+  }
+
+  .editableTextWrapper {
+    flex-grow: 1;
+    min-width: 0; /* pour que le h1 wrappe bien si nécessaire */
+  }
+
+  .editable-text {
+    word-break: break-word;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 500px) {
+  .musicCardGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .sectionContainer {
+    padding: 0 10px 20px;
+  }
 }

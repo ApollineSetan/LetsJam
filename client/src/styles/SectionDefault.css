@@ -1,21 +1,20 @@
 .sectionDefaultContainer {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  padding: 0 20px 20px 20px;
+  margin: 0 auto;
   width: 100%;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   box-sizing: border-box;
 }
 
 .sectionDefaultHeader {
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 10px 15px 15px 0;
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 25px;
+  padding: 10px 15px 15px 15px;
+  outline: none;
+  border-radius: 10px;
+  transition: border-color 0.3s ease-in-out;
 }
 
 .sectionDefaultHeader h1 {
@@ -28,34 +27,29 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   width: 100%;
-  justify-items: center;
   margin-top: 20px;
-  position: relative;
-  overflow: visible;
 }
 
-/* display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    box-sizing: border-box; */
+@media (max-width: 1200px) {
+  .sectionDefaultContainer {
+    padding: 0 15px 20px;
+  }
 
-/* .sectionHeader {
-  display: flex;
-  align-items: baseline;
+  .musicCardDefaultGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 }
 
-.sectionDefault h1 {
-  padding-left: 20px;
-  font-size: 17px;
-  color: rgb(255, 255, 255, 0.7);
-  width: 100%;
+@media (max-width: 768px) {
+  .musicCardDefaultGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 }
 
-.musicCardGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
-  width: 100%;
-  justify-items: center;
-  margin-top: 20px;
-} */
+@media (max-width: 500px) {
+  .sectionDefaultContainer {
+    padding: 0 10px 20px;
+  }
+}
