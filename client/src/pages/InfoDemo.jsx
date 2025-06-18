@@ -102,7 +102,11 @@ function InfoDemo() {
           </div>
 
           <div className="inputGroup">
+            <label className="visually-hidden" htmlFor="demo-title">
+              Titre de la démo
+            </label>
             <input
+              id="demo-title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -111,7 +115,11 @@ function InfoDemo() {
           </div>
 
           <div className="inputGroup">
+            <label className="visually-hidden" htmlFor="demo-description">
+              Description de la démo
+            </label>
             <textarea
+              id="demo-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="textareaField"

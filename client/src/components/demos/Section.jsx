@@ -81,7 +81,6 @@ function EditableText({ text, onSubmit, ariaLabel, onEditingChange }) {
           setIsEditing(true);
         }
       }}
-      role="button"
       aria-label={`${ariaLabel} (double-cliquez pour éditer)`}
       className="editable-text"
     >

@@ -13,7 +13,11 @@ function TopBar() {
 
   return (
     <div className="containerTopBar">
-      <button className="returnButton" onClick={handleReturnClick}>
+      <button
+        className="returnButton"
+        onClick={handleReturnClick}
+        aria-label="Retour"
+      >
         <i className="return">
           <IoIosArrowBack />
         </i>
@@ -24,7 +28,7 @@ function TopBar() {
           <BiSearchAlt />
         </i>
       </div>
-      <button className="notificationButton">
+      <button className="notificationButton" aria-label="Notifications">
         <i className="notification">
           <BiSolidBell />
         </i>
