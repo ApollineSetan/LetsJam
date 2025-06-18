@@ -103,3 +103,36 @@
 .notificationButton:hover i {
   transform: translateY(2);
 }
+
+.compactSearchIcon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(227, 62, 159, 0.5) 0%,
+    rgba(77, 37, 174, 0.5) 100%
+  );
+  border: 1px solid #4d25ae;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #f1f1f1;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.compactSearchIcon:hover {
+  transform: scale(1.1);
+  background: linear-gradient(
+    180deg,
+    rgba(227, 62, 159, 0.8) 0%,
+    rgba(77, 37, 174, 0.8) 100%
+  );
+}
