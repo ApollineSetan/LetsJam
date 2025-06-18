@@ -12,11 +12,14 @@ function App() {
       <Router>
         <div className="App">
           <LeftMenu />
-          <Routes>
-            <Route path="/" element={<EditionPage />} />
-            <Route path="/add-demo" element={<AddDemo />} />
-            <Route path="/edit-demo/:demoId" element={<InfoDemo />} />
-          </Routes>
+          <div className="mainContent">
+            <Routes>
+              <Route path="/" element={<EditionPage />} />
+              <Route path="/add-demo" element={<AddDemo />} />
+              <Route path="/edit-demo/:demoId" element={<InfoDemo />} />
+            </Routes>
+          </div>
+          {/* Background div for styling purposes */}
           <div className="background"></div>
         </div>
       </Router>

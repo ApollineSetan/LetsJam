@@ -6,6 +6,14 @@
   display: flex;
 }
 
+.mainContent {
+  flex-grow: 1;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .background {
   position: absolute;
   top: 0;
