@@ -75,9 +75,15 @@ export const DemoProvider = ({ children }) => {
 
   const updateDemo = async (demoId, updatedDemo) => {
     try {
-      const existingDemo = demos.find((d) => d.id === demoId);
+      const parsedId = parseInt(demoId, 10);
+      if (isNaN(parsedId)) {
+        console.error("Invalid demo ID:", demoId);
+        return;
+      }
+
+      const existingDemo = demos.find((d) => d.id === parsedId);
       if (!existingDemo) {
-        console.error("Demo not found for update:", demoId);
+        console.error("Demo not found for update:", parsedId);
         return;
       }
 
@@ -94,7 +100,7 @@ export const DemoProvider = ({ children }) => {
         formData.append("image_url", updatedDemo.image);
       }
 
-      // Include existing values for duration, sectionId, audio to avoid overwriting
+      // Include existing values to avoid overwriting with undefined
       if (existingDemo.duration != null)
         formData.append("duration", existingDemo.duration);
       if (existingDemo.sectionId != null)
@@ -102,7 +108,10 @@ export const DemoProvider = ({ children }) => {
       if (existingDemo.audio != null)
         formData.append("audio_url", existingDemo.audio);
 
-      const updatedDemoFromAPI = await DemoService.updateDemo(demoId, formData);
+      const updatedDemoFromAPI = await DemoService.updateDemo(
+        parsedId,
+        formData
+      );
 
       const transformedDemo = {
         id: updatedDemoFromAPI._id,
@@ -116,7 +125,7 @@ export const DemoProvider = ({ children }) => {
       };
 
       setDemos((prev) =>
-        prev.map((demo) => (demo.id === demoId ? transformedDemo : demo))
+        prev.map((demo) => (demo.id === parsedId ? transformedDemo : demo))
       );
     } catch (error) {
       console.error("Failed to update demo:", error);
@@ -219,10 +228,29 @@ export const DemoProvider = ({ children }) => {
     );
   };
 
+  const refreshData = async () => {
+    try {
+      const data = await DemoService.getAllDemos();
+      const transformed = data.map((demo) => ({
+        id: demo._id,
+        title: demo._title,
+        description: demo._description,
+        image: demo._image_url,
+        duration: demo._duration,
+        sectionId: demo._section_id,
+        audio: demo._audio_url,
+      }));
+      setDemos(transformed);
+    } catch (error) {
+      console.error("Error refreshing demos:", error);
+    }
+  };
+
   return (
     <DemoContext.Provider
       value={{
         demos,
+        setDemos,
         sections,
         createDemo,
         updateDemo,
@@ -232,6 +260,7 @@ export const DemoProvider = ({ children }) => {
         updateSection,
         deleteSection,
         moveDemosToDefault,
+        refreshData,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/EditionPage.css";
 import { TopBar } from "../components/TopBar";
 import { SectionDefault } from "../components/demos/SectionDefault";
@@ -10,7 +10,8 @@ import { useDemoContext } from "../contexts/DemoContext";
 import { NewSectionOverlay } from "../components/overlays/NewSectionOverlay";
 
 function EditionPage() {
-  const { demos, deleteDemo, addSection, sections } = useDemoContext();
+  const { demos, deleteDemo, addSection, sections, refreshData } =
+    useDemoContext();
   const [isNewSectionOverlayVisible, setNewSectionOverlayVisible] =
     useState(false);
 
@@ -30,6 +31,10 @@ function EditionPage() {
 
   const isAnyDemoPresent =
     demos.length > 0 || sections.some((section) => section.demos?.length > 0);
+
+  useEffect(() => {
+    refreshData();
+  }, []);
 
   return (
     <div className="mainContainer">

@@ -16,7 +16,7 @@ function formatDuration(seconds) {
 
 function MusicCard({ demo, deleteDemo }) {
   const { id, title, duration, image_url, image, audio } = demo;
-  const imageSrc = image || image_url || "";
+  const imageSrc = demo.image || demo.image_url || "";
   const audioSrc = demo.audio || demo.audio_url || demo.audioUrl || "";
   const audioRef = useRef(null);
   const cardRef = useRef(null);
@@ -36,7 +36,6 @@ function MusicCard({ demo, deleteDemo }) {
   const handlePlayClick = () => {
     if (audioRef.current) {
       audioRef.current.play();
-      console.log("Lecture de la musique : ", title);
     }
   };
 
