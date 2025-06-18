@@ -214,3 +214,24 @@
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+@media (max-width: 768px) {
+  .firstContainer,
+  .thirdContainer {
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .firstContainer .addTitle,
+  .firstContainer .addSection,
+  .addFile button,
+  .addImage button,
+  .thirdContainer .submit button {
+    width: 100%;
+  }
+
+  .secondContainer {
+    width: 100%;
+  }
+}
