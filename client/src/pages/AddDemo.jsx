@@ -98,6 +98,10 @@ function AddDemo() {
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        alert("Le fichier audio ne doit pas dépasser 10 Mo.");
+        return;
+      }
       setFile(selectedFile);
       setAudioButtonText(selectedFile.name);
     }
@@ -202,6 +206,10 @@ function AddDemo() {
               onChange={(e) => {
                 const selectedImage = e.target.files[0];
                 if (selectedImage) {
+                  if (selectedImage.size > 5 * 1024 * 1024) {
+                    alert("L'image ne doit pas dépasser 5 Mo.");
+                    return;
+                  }
                   setImage(selectedImage);
                   setImageButtonText(selectedImage.name);
                 }

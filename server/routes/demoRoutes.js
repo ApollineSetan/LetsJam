@@ -1,6 +1,8 @@
 import express from "express";
 import DemoController from "../controllers/demoController.js";
 import upload from "../middlewares/uploads.js";
+// import createDemoValidator from "../validators/demoValidators.js";
+// import validateRequest from "../middlewares/validateRequest.js";
 
 const router = express.Router();
 
@@ -13,5 +15,12 @@ router.post("/", upload.fields([        //  Handles multipart/form-data upload
 ]), DemoController.createDemo);
 router.put("/:id", upload.single('image_url'), DemoController.updateDemo);
 router.delete("/:id", DemoController.deleteDemo);
+
+
+
+// router.post("/", upload.fields([        //  Handles multipart/form-data upload
+//   { name: 'audio_url', maxCount: 1 },
+//   { name: 'image_url', maxCount: 1 }
+// ]), createDemoValidator, validateRequest, DemoController.createDemo);
 
 export default router;

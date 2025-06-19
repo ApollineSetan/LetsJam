@@ -34,11 +34,12 @@ const demoController = {
       const { title, description, duration: durationRaw, section_id: sectionRaw } = req.body;
 
       // Simple validation for required fields
-      if (!title || typeof title !== "string") {
-        return res.status(400).json({ message: "Title is required and must be a string." });
-      }
-      if (!description || typeof description !== "string") {
-        return res.status(400).json({ message: "Description is required and must be a string." });
+      let descriptionValue = null;
+      if (description !== undefined && description !== null && description !== "") {
+        if (typeof description !== "string") {
+          return res.status(400).json({ message: "Description must be a string." });
+        }
+        descriptionValue = description;
       }
 
       const duration = parseInt(durationRaw, 10);
