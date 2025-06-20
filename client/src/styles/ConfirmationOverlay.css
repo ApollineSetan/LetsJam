@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,7 @@
 }
 
 .confirmationBox {
-  background: rgb(69, 44, 72, 0.5);
+  background: rgb(69, 44, 72, 0.8);
   padding: 20px;
   border-radius: 20px;
   border: solid 1px white;

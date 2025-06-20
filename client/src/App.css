@@ -8,10 +8,11 @@
 
 .mainContent {
   flex-grow: 1;
-  height: 100vh;
-  overflow-y: auto;
+  overflow-y: auto; /* scroll ici, pas overflow hidden */
   padding: 20px;
   box-sizing: border-box;
+  height: auto; /* ou ne pas spécifier height */
+  /* outline: solid 1px green; */
 }
 
 .background {

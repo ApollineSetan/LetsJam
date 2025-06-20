@@ -3,7 +3,7 @@ const API = "http://localhost:5000/api/demos";
 const handleResponse = async (response) => {
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Erreur API : ${response.status} - ${errorText}`);
+        throw new Error(errorText || `Erreur API : ${response.status}`);
     }
     return await response.json();
 };

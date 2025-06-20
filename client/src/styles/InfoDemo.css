@@ -1,4 +1,5 @@
 .mainContainer {
+  position: relative;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -8,6 +9,7 @@
   padding: 10px;
   box-sizing: border-box;
   margin-top: 0px;
+  overflow-y: auto;
 }
 
 .sectionTitle {

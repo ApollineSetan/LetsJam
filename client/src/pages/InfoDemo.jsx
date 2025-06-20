@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { TopBar } from "../components/TopBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDemoContext } from "../contexts/DemoContext";
 import { RiImageEditFill } from "react-icons/ri";
 import "../styles/InfoDemo.css";
+import { AlertOverlay } from "../components/overlays/AlertOverlay";
+import { PageLayout } from "./PageLayout";
 
 function InfoDemo() {
   const { demoId } = useParams();
@@ -17,6 +18,7 @@ function InfoDemo() {
   const [imagePreview, setImagePreview] = useState(
     typeof demo?.image === "string" ? demo.image : ""
   );
+  const [alertMessage, setAlertMessage] = useState("");
 
   const imageUrlRef = useRef(null);
 
@@ -58,7 +60,7 @@ function InfoDemo() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) {
-      alert("Le titre est obligatoire");
+      setAlertMessage("Le titre est obligatoire");
       return;
     }
     const updatedDemo = {
@@ -74,66 +76,73 @@ function InfoDemo() {
   };
 
   return (
-    <div className="mainContainer">
-      <TopBar />
-      <div className="sectionTitle">
-        <h2>Modifier la démo</h2>
-      </div>
+    <PageLayout>
+      <div className="mainContainer">
+        <div className="sectionTitle">
+          <h2>Modifier la démo</h2>
+        </div>
 
-      {demo ? (
-        <form onSubmit={handleSubmit} className="editForm">
-          <div className="imageCard">
-            {imagePreview ? (
-              <img src={imagePreview} alt="Demo" className="demoImage" />
-            ) : (
-              <div className="noImagePlaceholder">Pas d'image disponible</div>
-            )}
-            <label className="editIconLabel">
+        {demo ? (
+          <form onSubmit={handleSubmit} className="editForm">
+            <div className="imageCard">
+              {imagePreview ? (
+                <img src={imagePreview} alt="Demo" className="demoImage" />
+              ) : (
+                <div className="noImagePlaceholder">Pas d'image disponible</div>
+              )}
+              <label className="editIconLabel">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="imageInput"
+                />
+                <span className="editIcon">
+                  <RiImageEditFill />
+                </span>
+              </label>
+            </div>
+
+            <div className="inputGroup">
+              <label className="visually-hidden" htmlFor="demo-title">
+                Titre de la démo
+              </label>
               <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="imageInput"
+                id="demo-title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="inputField"
               />
-              <span className="editIcon">
-                <RiImageEditFill />
-              </span>
-            </label>
-          </div>
+            </div>
 
-          <div className="inputGroup">
-            <label className="visually-hidden" htmlFor="demo-title">
-              Titre de la démo
-            </label>
-            <input
-              id="demo-title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="inputField"
-            />
-          </div>
+            <div className="inputGroup">
+              <label className="visually-hidden" htmlFor="demo-description">
+                Description de la démo
+              </label>
+              <textarea
+                id="demo-description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="textareaField"
+              />
+            </div>
 
-          <div className="inputGroup">
-            <label className="visually-hidden" htmlFor="demo-description">
-              Description de la démo
-            </label>
-            <textarea
-              id="demo-description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="textareaField"
-            />
-          </div>
-
-          <button type="submit" className="submitButton">
-            Enregistrer
-          </button>
-        </form>
-      ) : (
-        <p>Démo non trouvée</p>
-      )}
-    </div>
+            <button type="submit" className="submitButton">
+              Enregistrer
+            </button>
+          </form>
+        ) : (
+          <p>Démo non trouvée</p>
+        )}
+        {alertMessage && (
+          <AlertOverlay
+            message={alertMessage}
+            onClose={() => setAlertMessage("")}
+          />
+        )}
+      </div>
+    </PageLayout>
   );
 }
 

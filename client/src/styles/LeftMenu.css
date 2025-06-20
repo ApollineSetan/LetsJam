@@ -11,7 +11,7 @@
       #000d26 80%
     )
     1;
-  padding: 20px 15px;
+  padding: 20px 15px 5px 15px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -20,6 +20,14 @@
   flex-shrink: 0; /* ne pas rétrécir */
   position: sticky;
   top: 0;
+}
+
+.primaryMenu {
+  padding-bottom: 100px;
+}
+
+.secondaryMenu ul li:last-child {
+  margin-bottom: 0;
 }
 
 .logoImage {
@@ -68,6 +76,7 @@
 
 .secondaryMenu {
   margin-top: auto;
+  padding-bottom: 0;
 }
 
 .MenuContainer ul li.active a i {

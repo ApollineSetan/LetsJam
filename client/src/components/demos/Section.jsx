@@ -3,7 +3,7 @@ import "../../styles/Section.css";
 import { MusicCard } from "./MusicCard";
 import { useDemoContext } from "../../contexts/DemoContext";
 import { TbTrash } from "react-icons/tb";
-import { SectionConfirmationOverlay } from "../Overlays/SectionConfirmationOverlay";
+import { SectionConfirmationOverlay } from "../overlays/SectionConfirmationOverlay";
 
 // Inline editing and accessibility component
 function EditableText({ text, onSubmit, ariaLabel, onEditingChange }) {
