@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DemoConfirmationOverlay } from "../Overlays/DemoConfirmationOverlay";
+import { DemoConfirmationOverlay } from "../overlays/DemoConfirmationOverlay";
 import "../../styles/MusicCard.css";
 import iconeplay from "../../assets/iconeplay.png";
 import { TbTrash, TbDotsVertical } from "react-icons/tb";
