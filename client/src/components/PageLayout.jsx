@@ -1,5 +1,5 @@
 import "../styles/PageLayout.css";
-import { TopBar } from "../components/TopBar";
+import { TopBar } from "./TopBar";
 
 function PageLayout({ children }) {
   return (

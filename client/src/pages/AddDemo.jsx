@@ -3,10 +3,12 @@ import "../styles/AddDemo.css";
 import { MdOutlineLink } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { FaImages } from "react-icons/fa";
+
+import { PageLayout } from "../components/PageLayout";
 import { useDemoContext } from "../contexts/DemoContext";
 import { AlertOverlay } from "../components/overlays/AlertOverlay";
-import { PageLayout } from "./PageLayout";
 
+// Utility to calcultate audio duration locally before upload to backend
 function getAudioDuration(file) {
   return new Promise((resolve, reject) => {
     const audio = new Audio(URL.createObjectURL(file));
@@ -42,6 +44,7 @@ function AddDemo() {
       return;
     }
 
+    // Validate file extension against allowed audio formats
     const validExtensions = [
       "mp3",
       "flac",
@@ -61,9 +64,9 @@ function AddDemo() {
       return;
     }
 
+    // Usage in form submit : prevent uploading audio longer than an hour
     try {
       const duration = await getAudioDuration(file);
-
       if (duration > 3600) {
         setAlertMessage(
           "La durée du fichier audio ne doit pas dépasser 1 heure."
@@ -71,6 +74,7 @@ function AddDemo() {
         return;
       }
 
+      // Preparing data object including files and metadata to send to backend
       const demo = {
         title,
         description,
@@ -80,6 +84,7 @@ function AddDemo() {
         duration,
       };
 
+      // Using context methods createDemo which handles the multipart/form-data upload with fetch
       await createDemo(demo);
 
       setTitle("");

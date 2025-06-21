@@ -4,7 +4,7 @@ import { useDemoContext } from "../contexts/DemoContext";
 import { RiImageEditFill } from "react-icons/ri";
 import "../styles/InfoDemo.css";
 import { AlertOverlay } from "../components/overlays/AlertOverlay";
-import { PageLayout } from "./PageLayout";
+import { PageLayout } from "../components/PageLayout";
 
 function InfoDemo() {
   const { demoId } = useParams();

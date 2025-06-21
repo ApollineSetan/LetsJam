@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import "../styles/EditionPage.css";
-import { SectionDefault } from "../components/demos/SectionDefault";
-import { Section } from "../components/demos/Section";
 import { Link } from "react-router-dom";
+import "../styles/EditionPage.css";
 import { MdOutlineLink } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
+
+import { PageLayout } from "../components/PageLayout";
+import { SectionDefault } from "../components/demos/SectionDefault";
+import { Section } from "../components/demos/Section";
 import { useDemoContext } from "../contexts/DemoContext";
 import { NewSectionOverlay } from "../components/overlays/NewSectionOverlay";
-import { PageLayout } from "./PageLayout";
 
 function EditionPage() {
+  // Consumes global state and methods from DemoContext
   const { demos, deleteDemo, addSection, sections, refreshData } =
     useDemoContext();
   const [isNewSectionOverlayVisible, setNewSectionOverlayVisible] =
@@ -33,7 +35,7 @@ function EditionPage() {
     demos.length > 0 || sections.some((section) => section.demos?.length > 0);
 
   useEffect(() => {
-    refreshData();
+    refreshData(); // Fetch latest demos and sections from backend on component mount
   }, []);
 
   return (
