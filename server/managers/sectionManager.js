@@ -1,5 +1,5 @@
 import db from "../config/dbConfig.js";
-import Section from "../models/Section.js";
+import Section from "../models/section.js";
 import CustomError from "../utils/customError.js";
 
 const sectionManager = {
