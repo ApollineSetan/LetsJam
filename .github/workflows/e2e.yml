@@ -66,10 +66,7 @@ jobs:
 
       # 8. Attendre que le frontend soit prêt
       - name: Wait for frontend to be ready
-        uses: jakejarvis/wait-for-netlify-action@v1
-        with:
-          url: "http://localhost:5173"
-          timeout: 60
+        run: sleep 15
 
       # 9. Lancer les tests Cypress
       - name: Run Cypress tests
