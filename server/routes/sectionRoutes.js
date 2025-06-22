@@ -1,13 +1,24 @@
 import express from "express";
-import SectionController from "../controllers/sectionController.js";
+import sectionController from "../controllers/sectionController.js";
+import { createSectionValidator, updateSectionValidator } from "../validators/sectionValidators.js";
+import validateRequest from "../middlewares/validateRequest.js";
 
 const router = express.Router();
 
-// Routes for handling HTTP requests related to 'sections'
-router.get("/", SectionController.getAllSections);
-router.get("/:id", SectionController.getSectionById);
-router.post("/", SectionController.createSection);
-router.put("/:id", SectionController.updateSection);
-router.delete("/:id", SectionController.deleteSection);
+router.get("/", sectionController.getAllSections);
+router.get("/:id", sectionController.getSectionById);
+router.post(
+  "/",
+  createSectionValidator,
+  validateRequest,
+  sectionController.createSection
+);
+router.put(
+  "/:id",
+  updateSectionValidator,    // Apply field validation
+  validateRequest,          // Check validation result
+  sectionController.updateSection
+);
+router.delete("/:id", sectionController.deleteSection);
 
 export default router;

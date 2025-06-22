@@ -3,12 +3,27 @@ import "../../styles/ConfirmationOverlay.css";
 
 function NewSectionOverlay({ onCancel, onConfirm }) {
   const [sectionName, setSectionName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const trimmedName = sectionName.trim();
-    if (trimmedName !== "") {
-      onConfirm(trimmedName);
+    if (trimmedName === "") {
+      setErrorMessage("Le nom de la section est requis.");
+      return;
+    }
+
+    try {
+      await onConfirm(trimmedName);
       setSectionName("");
+      setErrorMessage("");
+    } catch (error) {
+      if (error.validationErrors) {
+        const firstError =
+          error.validationErrors[0]?.msg || "Erreur de validation.";
+        setErrorMessage(firstError);
+      } else {
+        setErrorMessage(error.message || "Une erreur est survenue.");
+      }
     }
   };
 
@@ -31,6 +46,7 @@ function NewSectionOverlay({ onCancel, onConfirm }) {
           placeholder="Entrer un nom"
           className="transparentInput"
         />
+        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
         <div className="buttons">
           <button onClick={onCancel} className="cancelButton">
             Annuler

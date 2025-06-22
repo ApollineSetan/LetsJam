@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import SectionService from "../../services/sectionService";
 import DemoService from "../../services/demoService";
 
+// Create context and custom hook; manage demos and sections state within the provider
 const DemoContext = createContext();
 
 export const useDemoContext = () => useContext(DemoContext);
-
 export const DemoProvider = ({ children }) => {
   const [demos, setDemos] = useState([]);
   const [sections, setSections] = useState([]);
@@ -24,6 +24,7 @@ export const DemoProvider = ({ children }) => {
     try {
       const data = await SectionService.getAllSections();
       const transformed = data.map(({ _id, _name }) => ({
+        // Rename API fields to client-friendly ones
         id: _id,
         name: _name,
       }));
@@ -37,6 +38,7 @@ export const DemoProvider = ({ children }) => {
     try {
       const data = await DemoService.getAllDemos();
       const transformed = data.map((demo) => ({
+        // Rename API fields to client-friendly ones
         id: demo._id,
         title: demo._title,
         description: demo._description,
@@ -69,7 +71,7 @@ export const DemoProvider = ({ children }) => {
       };
       setDemos((prev) => [...prev, transformedDemo]);
     } catch (error) {
-      console.error("Error creating demo:", error);
+      throw error;
     }
   };
 
@@ -100,7 +102,6 @@ export const DemoProvider = ({ children }) => {
         formData.append("image_url", updatedDemo.image);
       }
 
-      // Include existing values to avoid overwriting with undefined
       if (existingDemo.duration != null)
         formData.append("duration", existingDemo.duration);
       if (existingDemo.sectionId != null)
@@ -124,11 +125,12 @@ export const DemoProvider = ({ children }) => {
         createdAt: updatedDemoFromAPI._createdAt,
       };
 
+      // Update local demos state with new data
       setDemos((prev) =>
         prev.map((demo) => (demo.id === parsedId ? transformedDemo : demo))
       );
     } catch (error) {
-      console.error("Failed to update demo:", error);
+      throw error;
     }
   };
 
@@ -177,11 +179,11 @@ export const DemoProvider = ({ children }) => {
       });
       const transformedSection = {
         id: createdSectionFromAPI._id,
-        name: createdSectionFromAPI._name,
+        name: createdSectionFromAPI.name,
       };
       setSections((prev) => [...prev, transformedSection]);
     } catch (error) {
-      console.error("Failed to create section:", error);
+      throw error;
     }
   };
 
@@ -203,7 +205,7 @@ export const DemoProvider = ({ children }) => {
         )
       );
     } catch (error) {
-      console.error("Failed to update section:", error);
+      throw error;
     }
   };
 
@@ -246,6 +248,7 @@ export const DemoProvider = ({ children }) => {
     }
   };
 
+  // Provide all states and methods via context to children components
   return (
     <DemoContext.Provider
       value={{

@@ -7,7 +7,7 @@ const sectionManager = {
         try {
             const [rows] = await db.query("SELECT * FROM section");     // Secure against SQL injection using prepared statements
             return rows.map((row) => new Section(row.id, row.name));
-        } catch (error) {                                               // Catches any error that occurs during the query
+        } catch (error) {
             throw new CustomError(`Error fetching sections: ${error.message}`, 500);
         }
     },
@@ -41,12 +41,16 @@ const sectionManager = {
 
     async delete(id) {
         try {
-            await db.query("DELETE FROM section WHERE id = ?", [id]);
+            const [result] = await db.query("DELETE FROM section WHERE id = ?", [id]);
+            if (result.affectedRows === 0) {
+                return null;  // Rien supprimé
+            }
             return id;
         } catch (error) {
             throw new CustomError(`Error deleting section: ${error.message}`, 500);
         }
-    }
+    },
+
 };
 
 export default sectionManager;

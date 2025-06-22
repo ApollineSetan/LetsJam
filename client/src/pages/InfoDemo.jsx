@@ -57,12 +57,8 @@ function InfoDemo() {
     setImagePreview(imageUrlRef.current);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim()) {
-      setAlertMessage("Le titre est obligatoire");
-      return;
-    }
     const updatedDemo = {
       title,
       description,
@@ -71,8 +67,19 @@ function InfoDemo() {
       sectionId: demo?.sectionId || null,
       audio: demo?.audio || null,
     };
-    updateDemo(demoId, updatedDemo);
-    navigate("/");
+
+    try {
+      await updateDemo(demoId, updatedDemo);
+      navigate("/");
+    } catch (error) {
+      if (error.validationErrors && error.validationErrors.length > 0) {
+        setAlertMessage(
+          error.validationErrors[0].msg || "Erreur de validation."
+        );
+      } else {
+        setAlertMessage(error.message || "Une erreur est survenue.");
+      }
+    }
   };
 
   return (

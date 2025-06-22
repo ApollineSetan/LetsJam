@@ -26,9 +26,13 @@ function EditionPage() {
     setNewSectionOverlayVisible(false);
   };
 
-  const handleConfirmNewSection = (sectionName) => {
-    addSection(sectionName);
-    setNewSectionOverlayVisible(false);
+  const handleConfirmNewSection = async (sectionName) => {
+    try {
+      await addSection(sectionName);
+      setNewSectionOverlayVisible(false);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const isAnyDemoPresent =

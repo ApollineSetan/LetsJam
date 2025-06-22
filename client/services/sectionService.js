@@ -1,13 +1,23 @@
 const API = "http://localhost:5000/api/sections";
 
+// Utility function to handle fetch responses,
+// parses JSON and throws errors when necessary
 const handleResponse = async (response) => {
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
+  const contentType = response.headers.get("content-type");
+  const isJson = contentType && contentType.includes("application/json");
+  const body = isJson ? await response.json() : await response.text();
+
+  if (!response.ok) {
+    if (isJson && body.errors) {
+      throw { validationErrors: body.errors };
     }
-    return await response.json();
+    throw new Error(body.error || "Unknown API error");
+  }
+
+  return body;
 };
 
+// SectionService encapsulates CRUD calls for sections
 export const SectionService = {
     getAllSections: async () => {
         const response = await fetch(API);

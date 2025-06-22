@@ -83,3 +83,9 @@
   border-color: #ffffff;
   outline: none;
 }
+
+.errorMessage {
+  color: red;
+  margin-top: 8px;
+  font-weight: bold;
+}

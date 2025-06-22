@@ -4,20 +4,17 @@ import { MdOutlineLink } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { FaImages } from "react-icons/fa";
 
+import { isValidAudioFile, isValidImageFile } from "../utils/filesValidation";
 import { PageLayout } from "../components/PageLayout";
 import { useDemoContext } from "../contexts/DemoContext";
 import { AlertOverlay } from "../components/overlays/AlertOverlay";
 
-// Utility to calcultate audio duration locally before upload to backend
+// Utility function to get the duration of an audio file in seconds asynchronously
 function getAudioDuration(file) {
   return new Promise((resolve, reject) => {
     const audio = new Audio(URL.createObjectURL(file));
-    audio.oncanplaythrough = () => {
-      resolve(Math.floor(audio.duration));
-    };
-    audio.onerror = () => {
-      reject("Impossible de récupérer la durée de l'audio");
-    };
+    audio.oncanplaythrough = () => resolve(Math.floor(audio.duration));
+    audio.onerror = () => reject("Impossible de récupérer la durée de l'audio");
   });
 }
 
@@ -28,43 +25,30 @@ function AddDemo() {
   const [image, setImage] = useState(null);
   const [sectionId, setSectionId] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
-  const { createDemo, sections } = useDemoContext();
-  const navigate = useNavigate();
 
+  // Button text states to display selected file names or default text
   const [audioButtonText, setAudioButtonText] = useState(
     "Ajouter un fichier audio"
   );
   const [imageButtonText, setImageButtonText] = useState("Ajouter une image");
 
+  // Access createDemo function and sections list from context
+  const { createDemo, sections } = useDemoContext();
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!title || !file) {
-      setAlertMessage("Le titre et le fichier sont obligatoires !");
+    // if (!title || !file) {
+    //   setAlertMessage("Le titre et le fichier audio sont obligatoires !");
+    //   return;
+    // }
+
+    if (!isValidAudioFile(file)) {
+      setAlertMessage("Le fichier audio est invalide ou dépasse 10 Mo.");
       return;
     }
 
-    // Validate file extension against allowed audio formats
-    const validExtensions = [
-      "mp3",
-      "flac",
-      "wav",
-      "aac",
-      "ogg",
-      "aiff",
-      "m4a",
-      "wma",
-    ];
-    const fileExtension = file.name.split(".").pop().toLowerCase();
-
-    if (!validExtensions.includes(fileExtension)) {
-      setAlertMessage(
-        "Format de fichier audio invalide ! Veuillez télécharger un fichier MP3, FLAC, WAV, AAC, OGG, AIFF, M4A ou WMA."
-      );
-      return;
-    }
-
-    // Usage in form submit : prevent uploading audio longer than an hour
     try {
       const duration = await getAudioDuration(file);
       if (duration > 3600) {
@@ -74,7 +58,6 @@ function AddDemo() {
         return;
       }
 
-      // Preparing data object including files and metadata to send to backend
       const demo = {
         title,
         description,
@@ -84,9 +67,9 @@ function AddDemo() {
         duration,
       };
 
-      // Using context methods createDemo which handles the multipart/form-data upload with fetch
       await createDemo(demo);
 
+      // Reset state
       setTitle("");
       setDescription("");
       setFile(null);
@@ -96,19 +79,25 @@ function AddDemo() {
 
       navigate("/");
     } catch (error) {
-      setAlertMessage(error.message || "Une erreur est survenue.");
+      if (error.validationErrors?.length > 0) {
+        setAlertMessage(
+          error.validationErrors[0].msg || "Erreur de validation."
+        );
+      } else {
+        setAlertMessage(
+          error?.message?.toString() || "Une erreur inattendue est survenue."
+        );
+      }
     }
   };
 
-  const handleAudioClick = () => {
-    document.getElementById("audioFile").click();
-  };
+  const handleAudioClick = () => document.getElementById("audioFile").click();
 
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      if (selectedFile.size > 10 * 1024 * 1024) {
-        setAlertMessage("Le fichier audio ne doit pas dépasser 10 Mo.");
+      if (!isValidAudioFile(selectedFile)) {
+        setAlertMessage("Fichier audio invalide ou trop volumineux.");
         return;
       }
       setFile(selectedFile);
@@ -116,8 +105,18 @@ function AddDemo() {
     }
   };
 
-  const handleImageClick = () => {
-    document.getElementById("imageFile").click();
+  const handleImageClick = () => document.getElementById("imageFile").click();
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    if (selectedImage) {
+      if (!isValidImageFile(selectedImage)) {
+        setAlertMessage("L'image ne doit pas dépasser 5 Mo.");
+        return;
+      }
+      setImage(selectedImage);
+      setImageButtonText(selectedImage.name);
+    }
   };
 
   return (
@@ -159,6 +158,7 @@ function AddDemo() {
               </select>
             </div>
           </div>
+
           <div className="secondContainer">
             <label htmlFor="descriptionInput" className="sr-only">
               Description
@@ -170,16 +170,13 @@ function AddDemo() {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
+
           <div className="thirdContainer">
             <div className="addFile">
               <button
                 type="button"
                 onClick={handleAudioClick}
-                aria-label={
-                  file
-                    ? `Changer le fichier audio, fichier actuel : ${file.name}`
-                    : "Ajouter un fichier audio"
-                }
+                aria-label={audioButtonText}
               >
                 <span className="file-name">{audioButtonText}</span>
                 <MdOutlineLink />
@@ -194,15 +191,12 @@ function AddDemo() {
                 aria-required="true"
               />
             </div>
+
             <div className="addImage">
               <button
                 type="button"
                 onClick={handleImageClick}
-                aria-label={
-                  image
-                    ? `Changer l'image, image actuelle : ${image.name}`
-                    : "Ajouter une image"
-                }
+                aria-label={imageButtonText}
               >
                 <span className="file-name">{imageButtonText}</span>
                 <FaImages />
@@ -212,24 +206,16 @@ function AddDemo() {
                 id="imageFile"
                 style={{ display: "none" }}
                 accept="image/*"
-                onChange={(e) => {
-                  const selectedImage = e.target.files[0];
-                  if (selectedImage) {
-                    if (selectedImage.size > 5 * 1024 * 1024) {
-                      setAlertMessage("L'image ne doit pas dépasser 5 Mo.");
-                      return;
-                    }
-                    setImage(selectedImage);
-                    setImageButtonText(selectedImage.name);
-                  }
-                }}
+                onChange={handleImageChange}
               />
             </div>
+
             <div className="submit">
               <button type="submit">Valider</button>
             </div>
           </div>
         </form>
+
         {alertMessage && (
           <AlertOverlay
             message={alertMessage}

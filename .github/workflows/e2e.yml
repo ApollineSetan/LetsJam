@@ -14,22 +14,18 @@ jobs:
         shell: bash
 
     steps:
-      # 1. Cloner le dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Installer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
-      # 3. Installer les dépendances du backend
       - name: Install server dependencies
         working-directory: ./server
         run: npm install
 
-      # 4. Recréer le fichier .env dans /server
       - name: Create .env for backend
         working-directory: ./server
         run: |
@@ -44,19 +40,16 @@ jobs:
           echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> .env
           echo "AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}" >> .env
 
-      # 5. Installer les dépendances du frontend
       - name: Install client dependencies
         working-directory: ./client
         run: npm install
 
-      # 6. Démarrer le backend
       - name: Start backend
         working-directory: ./server
         run: npm run dev &
         env:
           PORT: 5000
 
-      # 7. Démarrer le frontend
       - name: Start frontend
         working-directory: ./client
         run: npm run dev &
@@ -64,11 +57,9 @@ jobs:
           PORT: 5173
           VITE_API_URL: http://localhost:5000
 
-      # 8. Attendre que le frontend soit prêt
       - name: Wait for frontend to be ready
         run: sleep 15
 
-      # 9. Lancer les tests Cypress
       - name: Run Cypress tests
         working-directory: ./client
         run: npx cypress run

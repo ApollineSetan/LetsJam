@@ -1,4 +1,3 @@
-// Constructor
 class Demo {
   constructor(id, title, description, image_url, duration, createdAt, section_id, audio_url) {
     this.id = id;
@@ -11,7 +10,6 @@ class Demo {
     this.audio_url = audio_url;
   }
 
-// Getters and Setters
   get id() {
     return this._id;
   }
